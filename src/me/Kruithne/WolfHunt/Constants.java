@@ -17,7 +17,7 @@ public class Constants {
 	public String directionWest = "west";
 	public String directionUnknown = "skyward";
 	
-	public static String commandNoParameters = "No command specified. Format: '/wolfhunt [command] [parameters]'";
+	public static String commandNoParameters = "Error, Format: '/wolfhunt [command] [parameters]'";
 	public static String commandSeeHelp = "See '/wolfhunt help' for available commands";
 	public static String commandAvailable = "Your available commands for WolfHunt:";
 	public static String commandNoneAvail = "No available commands found";
