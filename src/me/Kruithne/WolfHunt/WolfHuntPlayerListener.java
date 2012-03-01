@@ -24,7 +24,7 @@ public class WolfHuntPlayerListener implements Listener
 		
 		if (eventPlayer.getItemInHand() == trackingItemStack)
 		{
-			if (eventPlayer.hasPermission(String.format(Constants.pluginNodePath, "canTrack")))
+			if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
 			{
 				this.wolfHuntPlugin.outputToPlayer("Placeholder here. Well, hello there.", eventPlayer);
 			}

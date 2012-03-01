@@ -24,6 +24,20 @@ public class WolfHunt extends JavaPlugin {
 		this.config.loadConfiguration();
 	}
 	
+	public boolean hasPermission(String permKey, Player player)
+	{
+		if (player.isOp())
+		{
+			return true;
+		}
+		else if (player.hasPermission(String.format(Constants.pluginNodePath, permKey)))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public void outputToConsole(String message, Level outputType)
 	{
 		this.log.log(outputType, String.format(Constants.outputToConsoleFormat, Constants.outputPluginTag, message));
