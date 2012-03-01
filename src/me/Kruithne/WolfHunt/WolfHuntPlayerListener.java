@@ -1,6 +1,10 @@
 package me.Kruithne.WolfHunt;
 
+import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -22,9 +26,19 @@ public class WolfHuntPlayerListener implements Listener
 		
 		if (eventPlayer.getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem)
 		{
-			if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
+			Entity interactedEntity = event.getRightClicked();
+			
+			if (interactedEntity.getType() == EntityType.WOLF)
 			{
-				this.wolfHuntPlugin.outputToPlayer("Placeholder here. Well, hello there.", eventPlayer);
+				Wolf interactedWolf = (Wolf) interactedEntity;
+				
+				if (interactedWolf.isTamed() && interactedWolf.getOwner() == (AnimalTamer) eventPlayer)
+				{
+					if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
+					{
+						this.wolfHuntPlugin.outputToPlayer("Placeholder here. Well, hello there.", eventPlayer);
+					}
+				}
 			}
 		}
 	}
