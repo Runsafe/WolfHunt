@@ -1,5 +1,7 @@
 package me.Kruithne.WolfHunt;
 
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,11 +36,11 @@ public class WolfHunt extends JavaPlugin {
 	public void trackPlayers(Player player)
 	{
 		List<Player> worldPlayers = player.getWorld().getPlayers();
-		Location playerLocation = player.getLocation();
-		Player closestPlayer = null;
-		boolean playerNearby = false;
 		
-		Iterator<Player> loop = worldPlayers.iterator(); 
+		Location origin = player.getLocation();
+		Hashtable<Double, Player> distances = new Hashtable<Double, Player>();
+		boolean loopBroke = false;
+		Iterator<Player> loop = worldPlayers.iterator();
 		
 		while (loop.hasNext())
 		{
@@ -46,26 +48,25 @@ public class WolfHunt extends JavaPlugin {
 				
 			if (checkPlayer != player)
 			{
-				Location checkLocation = checkPlayer.getLocation();
+				double theDistance = origin.distance(checkPlayer.getLocation());
 				
-				if (playerLocation.distance(checkLocation) < this.config.trackingRadius)
+				if (theDistance < this.config.trackingRadius)
 				{
 					this.outputToPlayer(Constants.messageNearby, player);
-					playerNearby = true;
+					loopBroke = true;
 					break;
 				}
-				else if (closestPlayer == null || playerLocation.distance(checkLocation) < playerLocation.distance(closestPlayer.getLocation()))
-				{
-					closestPlayer = checkPlayer;
-				}
+				distances.put(origin.distance(checkPlayer.getLocation()), checkPlayer);
 			}
 		}
 		
-		if (!playerNearby)
+		Player closestPlayer = distances.get(Collections.min(distances.keySet()));
+		
+		if (!loopBroke)
 		{
 			if (closestPlayer != null)
 			{
-				this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
+				this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(origin, closestPlayer.getLocation())), player);
 			}
 			else
 			{
