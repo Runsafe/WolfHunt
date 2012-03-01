@@ -36,7 +36,7 @@ public class WolfHuntPlayerListener implements Listener
 				{
 					if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
 					{
-						this.wolfHuntPlugin.outputToPlayer("Placeholder here. Well, hello there.", eventPlayer);
+						this.wolfHuntPlugin.trackPlayers(eventPlayer);
 					}
 				}
 			}

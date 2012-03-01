@@ -35,6 +35,7 @@ public class Constants {
 	public static String pluginNodePath = "wolfhunt.%s";
 	
 	public static String default_trackingItem = Integer.toString(Material.STRING.getId());
+	public static String default_trackingRadius = "200";
 	public static String default_allowOpOverride = "true";
 	
 }
