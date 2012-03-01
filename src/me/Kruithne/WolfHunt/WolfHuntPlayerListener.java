@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class WolfHuntPlayerListener implements Listener
 {
-	WolfHunt wolfHuntPlugin = null;
+	private WolfHunt wolfHuntPlugin = null;
 	
 	WolfHuntPlayerListener(WolfHunt parentPlugin)
 	{

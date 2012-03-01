@@ -17,14 +17,20 @@ public class Constants {
 	public String directionWest = "west";
 	public String directionUnknown = "skyward";
 	
+	public static String commandNoParameters = "No command specified. Format: '/wolfhunt [command] [parameters]'";
+	public static String commandSeeHelp = "See '/wolfhunt help' for available commands";
+	public static String commandAvailable = "Your available commands for WolfHunt:";
+	public static String commandNoneAvail = "No available commands found";
+	
+	public static String commandInfoFormat = "- '/wolfhunt %s' - %s";
+	
+	public static String commandInfoSpawnWolf = String.format(Constants.commandInfoFormat, "spawnwolf", "Spawns an untamed wolf");
+	
 	public static String outputPluginTag = "[WolfHunt]";
 	public static String outputToConsoleFormat = "%s %s";
 	public static String outputToPlayerFormat = "%s%s";
 	
 	public static String pluginNodePath = "wolfhunt.%s";
-	
-	public static String configDirectory = "plugins/WolfHunt";
-	public static String configFailed = "Failed to create the configuration file, using built-in configuration.";
 	
 	public static String default_trackingItem = Integer.toString(Material.STRING.getId());
 	public static String default_allowOpOverride = "true";

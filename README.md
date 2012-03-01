@@ -10,10 +10,12 @@ Permissions
 
 wolfhunt.canTrack - If true the player will be allowed to use the tracking item on wolves to hunt players.
 
+wolfhunt.commandSpawnWolf - If true the player will be able to use the wolf spawning command. (Used for debugging)
+
 Commands
 --------
 
-Coming soon
+/wolfhunt spawnwolf - Spawns an untamed wolf. [Permission: wolfhunt.commandSpawnWolf]
 
 Configuration
 --------

@@ -2,7 +2,7 @@ package me.Kruithne.WolfHunt;
 
 public class Configuration {
 	
-	WolfHunt wolfHuntPlugin = null;
+	private WolfHunt wolfHuntPlugin = null;
 	
 	public int trackingItem;
 	public boolean allowOpOverride;
