@@ -21,10 +21,12 @@ public class Constants {
 	public static String commandSeeHelp = "See '/wolfhunt help' for available commands";
 	public static String commandAvailable = "Your available commands for WolfHunt:";
 	public static String commandNoneAvail = "No available commands found";
-	
+	public static String commandUnknown = "Unknown commmand '%s' entered";	
 	public static String commandInfoFormat = "- '/wolfhunt %s' - %s";
 	
 	public static String commandInfoSpawnWolf = String.format(Constants.commandInfoFormat, "spawnwolf", "Spawns an untamed wolf");
+	
+	public static String commandInfoSpawnWolfDone = "Spawned an untamed wolf at your location";
 	
 	public static String outputPluginTag = "[WolfHunt]";
 	public static String outputToConsoleFormat = "%s %s";

@@ -42,10 +42,9 @@ public class WolfHunt extends JavaPlugin {
 		return false;
 	}
 
-	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
+	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
 	{
-		
-		return false;
+		return this.commandHandler.handleCommand(sender, command, arguments);
 	}
 	
 	public void outputToConsole(String message, Level outputType)

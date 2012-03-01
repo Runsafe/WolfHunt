@@ -2,6 +2,7 @@ package me.Kruithne.WolfHunt;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class CommandHandler {
@@ -15,16 +16,30 @@ public class CommandHandler {
 	
 	public boolean handleCommand(CommandSender sender, Command command, String[] arguments)
 	{
+		Player player = (Player) sender;
 		if (command.getName().equalsIgnoreCase("wolfhunt") || command.getName().equalsIgnoreCase("wh"))
 		{
 			if (arguments.length > 0)
 			{
-				
+				if (arguments[0].equalsIgnoreCase("help"))
+				{
+					this.printCommandHelp(sender);
+				}
+				else if (arguments[0].equalsIgnoreCase("spawnwolf"))
+				{
+					player.getWorld().spawnCreature(player.getLocation(), EntityType.WOLF);
+					this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolfDone, player);
+				}
+				else
+				{
+					this.wolfHuntPlugin.outputToPlayer(String.format(Constants.commandUnknown, arguments[0]), player);
+					this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
+				}
 			}
 			else
 			{
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandNoParameters, (Player) sender);
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, (Player) sender);
+				this.wolfHuntPlugin.outputToPlayer(Constants.commandNoParameters, player);
+				this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
 			}
 			return true;
 		}
