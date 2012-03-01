@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class WolfHuntPlayerListener implements Listener
 {
@@ -20,9 +19,8 @@ public class WolfHuntPlayerListener implements Listener
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
 		Player eventPlayer = event.getPlayer();
-		ItemStack trackingItemStack = new ItemStack(this.wolfHuntPlugin.config.trackingItem);
 		
-		if (eventPlayer.getItemInHand() == trackingItemStack)
+		if (eventPlayer.getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem)
 		{
 			if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
 			{
