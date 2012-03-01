@@ -34,8 +34,9 @@ public class WolfHunt extends JavaPlugin {
 	public void trackPlayers(Player player)
 	{
 		List<Player> worldPlayers = player.getWorld().getPlayers();
-		Player closestPlayer = null;
 		Location playerLocation = player.getLocation();
+		Player closestPlayer = null;
+		boolean playerNearby = false;
 		
 		Iterator<Player> loop = worldPlayers.iterator(); 
 		
@@ -50,6 +51,7 @@ public class WolfHunt extends JavaPlugin {
 				if (playerLocation.distance(checkLocation) < this.config.trackingRadius)
 				{
 					this.outputToPlayer(Constants.messageNearby, player);
+					playerNearby = true;
 					break;
 				}
 				else
@@ -62,13 +64,16 @@ public class WolfHunt extends JavaPlugin {
 			}
 		}
 		
-		if (closestPlayer != null)
+		if (!playerNearby)
 		{
-			this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
-		}
-		else
-		{
-			this.outputToPlayer(Constants.messageNoPlayers, player);
+			if (closestPlayer != null)
+			{
+				this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
+			}
+			else
+			{
+				this.outputToPlayer(Constants.messageNoPlayers, player);
+			}
 		}
 	}
 	
