@@ -35,7 +35,7 @@ public class WolfHunt extends JavaPlugin {
 	
 	public void outputToPlayer(String message, Player player)
 	{
-		player.sendMessage(String.format(Constants.outputToPlayerFormat, ChatColor.DARK_AQUA, Constants.outputPluginTag, message));
+		player.sendMessage(String.format(Constants.outputToPlayerFormat, ChatColor.DARK_AQUA, message));
 	}
 
 }

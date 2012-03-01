@@ -17,7 +17,7 @@ public class Constants {
 	
 	public static String outputPluginTag = "[WolfHunt]";
 	public static String outputToConsoleFormat = "%s %s";
-	public static String outputToPlayerFormat = "%s%s: %s";
+	public static String outputToPlayerFormat = "%s%s";
 	
 	public static String configNodePath = "wolfhunt.%s";
 	
