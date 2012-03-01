@@ -20,12 +20,8 @@ public class WolfHunt extends JavaPlugin {
 		this.server = this.getServer();
 		this.config = new Configuration(this);
 		this.playerListener = new WolfHuntPlayerListener(this);
-		this.loadConfiguration();
-	}
-	
-	public void loadConfiguration()
-	{
-		//Coming soon.
+		
+		this.config.loadConfiguration();
 	}
 	
 	public void outputToConsole(String message, Level outputType)
