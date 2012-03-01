@@ -17,6 +17,10 @@ public class Configuration {
 		{
 			return this.wolfHuntPlugin.getConfig().getString(String.format(Constants.pluginNodePath, configKey));
 		}
+		else
+		{
+			this.setConfigValue(configKey, defaultValue);
+		}
 		
 		return defaultValue;
 	}
