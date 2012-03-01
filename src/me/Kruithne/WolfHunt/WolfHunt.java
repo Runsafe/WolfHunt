@@ -3,7 +3,6 @@ package me.Kruithne.WolfHunt;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
