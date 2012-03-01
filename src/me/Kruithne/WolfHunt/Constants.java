@@ -27,5 +27,6 @@ public class Constants {
 	public static String configFailed = "Failed to create the configuration file, using built-in configuration.";
 	
 	public static String default_trackingItem = Integer.toString(Material.STRING.getId());
+	public static String default_allowOpOverride = "true";
 	
 }

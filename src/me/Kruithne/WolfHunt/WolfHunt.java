@@ -26,7 +26,7 @@ public class WolfHunt extends JavaPlugin {
 	
 	public boolean hasPermission(String permKey, Player player)
 	{
-		if (player.isOp())
+		if (player.isOp() && this.config.allowOpOverride)
 		{
 			return true;
 		}

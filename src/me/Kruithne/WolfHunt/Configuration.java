@@ -5,6 +5,7 @@ public class Configuration {
 	WolfHunt wolfHuntPlugin = null;
 	
 	public int trackingItem;
+	public boolean allowOpOverride;
 	
 	Configuration(WolfHunt parentPlugin)
 	{
@@ -34,6 +35,7 @@ public class Configuration {
 	public void loadConfiguration()
 	{
 		this.trackingItem = Integer.parseInt(this.getConfigValue("trackingItem", Constants.default_trackingItem));
+		this.allowOpOverride = Boolean.parseBoolean(this.getConfigValue("allowOpOverride", Constants.default_allowOpOverride));
 	}
 	
 }
