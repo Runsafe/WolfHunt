@@ -11,11 +11,11 @@ public class Constants {
 	public static String messageDetected = "The wolf barks in the %s direction.";
 	public static String messageNearby = "The wolf growls loudly.";
 	
-	public String directionNorth = "north";
-	public String directionEast = "east";
-	public String directionSouth = "south";
-	public String directionWest = "west";
-	public String directionUnknown = "skyward";
+	public static String directionNorth = "north";
+	public static String directionEast = "east";
+	public static String directionSouth = "south";
+	public static String directionWest = "west";
+	public static String directionUnknown = "skyward";
 	
 	public static String commandNoParameters = "Error, Format: '/wolfhunt [command] [parameters]'";
 	public static String commandSeeHelp = "See '/wolfhunt help' for available commands";

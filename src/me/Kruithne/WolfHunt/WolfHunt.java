@@ -70,8 +70,7 @@ public class WolfHunt extends JavaPlugin {
 			
 			if (closestPlayer != null)
 			{
-				float yaw = playerLocation.getYaw();
-				this.outputToPlayer(String.format(Constants.messageDetected, Math.ceil(yaw)), player);
+				this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
 			}
 			else
 			{
@@ -82,6 +81,50 @@ public class WolfHunt extends JavaPlugin {
 		{
 			this.outputToPlayer(Constants.messageNoPlayers, player);
 		}
+	}
+	
+	public String getCompassDirection(Location firstLocation, Location secondLocation)
+	{		
+		double fX = firstLocation.getX();
+		double fZ = firstLocation.getZ();
+		
+		double sX = secondLocation.getX();
+		double sZ = secondLocation.getZ();
+		
+		String xString = "";
+		String zString = "";
+		
+		if ((sX - fX) > this.config.trackingRadius)
+		{
+			xString = Constants.directionNorth;
+		}
+		else if ((sX - fX) < (this.config.trackingRadius - (this.config.trackingRadius * 2)))
+		{
+			xString = Constants.directionSouth;
+		}
+		
+		if ((sZ - fZ) > this.config.trackingRadius)
+		{
+			zString = Constants.directionWest;
+		}
+		else if ((sZ - fZ) < (this.config.trackingRadius - (this.config.trackingRadius * 2)))
+		{
+			zString = Constants.directionEast;
+		}
+		
+		if (xString != "" && zString != "")
+		{
+			return xString + "-" + zString;
+		}
+		else if (xString != "")
+		{
+			return xString;
+		}
+		else if (zString != "")
+		{
+			return zString;
+		}
+		return Constants.directionUnknown;
 	}
 	
 	public boolean hasPermission(String permKey, Player player)
