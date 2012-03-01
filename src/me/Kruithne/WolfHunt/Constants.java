@@ -17,6 +17,8 @@ public class Constants {
 	public String directionUnknown = "skyward";
 	
 	public static String outputPluginTag = "[WolfHunt]";
+	public static String outputToConsoleFormat = "%s %s";
+	public static String outputToPlayerFormat = "%s%s: %s";
 	
 	public static String configDirectory = "plugins/WolfHunt";
 	public static String configFailed = "Failed to create the configuration file, using built-in configuration.";
