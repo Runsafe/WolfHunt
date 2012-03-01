@@ -67,48 +67,33 @@ public class WolfHunt extends JavaPlugin {
 		return String.format(Constants.messageDetected, this.getCompassDirection(origin, distances.get(Collections.min(distances.keySet())).getLocation()));
 	}
 	
-	public String getCompassDirection(Location firstLocation, Location secondLocation)
-	{		
-		double fX = firstLocation.getX();
-		double fZ = firstLocation.getZ();
+	public String getCompassDirection(Location a, Location b)
+	{
+		double v = a.getX() - b.getX();
+		double h = a.getZ() - b.getZ();
+
+		String hDir = h < 0 ? Constants.directionWest : Constants.directionEast;
+		String vDir = v < 0 ? Constants.directionNorth : Constants.directionSouth;
+	
+		if(v == 0)
+		{
+			v = 0.1;
+		}
+	
+		double angle = Math.cos(Math.abs(v) / a.distance(b));
 		
-		double sX = secondLocation.getX();
-		double sZ = secondLocation.getZ();
-		
-		String xString = "";
-		String zString = "";
-		
-		if ((sX - fX) > this.config.trackingRadius)
+		if(angle <= 22.5)
 		{
-			xString = Constants.directionNorth;
+			return hDir;
 		}
-		else if ((sX - fX) < (this.config.trackingRadius - (this.config.trackingRadius * 2)))
+		else if(angle >= 67.5)
 		{
-			xString = Constants.directionSouth;
+			return vDir;
 		}
-		
-		if ((sZ - fZ) > this.config.trackingRadius)
+		else
 		{
-			zString = Constants.directionWest;
+			return hDir + "-" + vDir;
 		}
-		else if ((sZ - fZ) < (this.config.trackingRadius - (this.config.trackingRadius * 2)))
-		{
-			zString = Constants.directionEast;
-		}
-		
-		if (xString != "" && zString != "")
-		{
-			return xString + "-" + zString;
-		}
-		else if (xString != "")
-		{
-			return xString;
-		}
-		else if (zString != "")
-		{
-			return zString;
-		}
-		return Constants.directionUnknown;
 	}
 	
 	public boolean hasPermission(String permKey, Player player)
