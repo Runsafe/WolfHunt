@@ -18,4 +18,6 @@ Coming soon
 Configuration
 --------
 
-All configuration is stored in 'plugins/WolfHunt/config.yml' with information relating to the values.
+allowOpOverride - [Default: false] - If true, being a server OP will override all WolfHunt permissions.
+
+trackingItem - [Default: 287] - The item used to track players when right clicked on an owned wolf.
