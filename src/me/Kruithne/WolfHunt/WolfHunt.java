@@ -16,11 +16,28 @@ public class WolfHunt extends JavaPlugin {
 	public void onEnable()
 	{
 		this.server = this.getServer();
+		this.loadConfiguration();
+	}
+	
+	public String getConfigValue(String configKey)
+	{	
+		if (this.getConfig().contains(String.format(Constants.configNodePath, configKey)))
+		{
+			return this.getConfig().getString(String.format(Constants.configNodePath, configKey));
+		}
+		
+		return null;
+	}
+	
+	public void setConfigValue(String configKey, String configValue)
+	{
+		this.getConfig().set(configKey, configValue);
+		this.saveConfig();
 	}
 	
 	public void loadConfiguration()
 	{
-		
+		//Coming soon.
 	}
 	
 	public void outputToConsole(String message, Level outputType)

@@ -20,6 +20,8 @@ public class Constants {
 	public static String outputToConsoleFormat = "%s %s";
 	public static String outputToPlayerFormat = "%s%s: %s";
 	
+	public static String configNodePath = "wolfhunt.%s";
+	
 	public static String configDirectory = "plugins/WolfHunt";
 	public static String configFailed = "Failed to create the configuration file, using built-in configuration.";
 	
