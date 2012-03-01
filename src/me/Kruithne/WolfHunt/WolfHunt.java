@@ -54,12 +54,9 @@ public class WolfHunt extends JavaPlugin {
 					playerNearby = true;
 					break;
 				}
-				else
+				else if (closestPlayer == null || playerLocation.distance(checkLocation) < playerLocation.distance(closestPlayer.getLocation()))
 				{
-					if (closestPlayer == null || playerLocation.distance(checkLocation) < playerLocation.distance(closestPlayer.getLocation()))
-					{
-						closestPlayer = checkPlayer;
-					}
+					closestPlayer = checkPlayer;
 				}
 			}
 		}
