@@ -34,47 +34,37 @@ public class WolfHunt extends JavaPlugin {
 	
 	public void trackPlayers(Player player)
 	{
-		Location playerLocation = player.getLocation();
-		Player closestPlayer = getTrackedPlayer(player.getWorld().getPlayers().iterator(), player, playerLocation);
+		Location origin = player.getLocation();
+		Iterator<Player> players = player.getWorld().getPlayers().iterator();
 		
-		if (closestPlayer == player)
-		{
-			this.outputToPlayer(Constants.messageNoPlayers, player);
-		}
-		else if (closestPlayer == null)
-		{
-			this.outputToPlayer(Constants.messageNearby, player);
-		}
-		else
-		{
-			this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
-		}
+		this.outputToPlayer(getTrackerResult(players, origin, player), player);
 	}
 
-	private Player getTrackedPlayer(Iterator<Player> players, Player originPlayer, Location origin)
-	{		
-		 Hashtable<Double, Player> distances = new Hashtable<Double, Player>();
-		 
-		 while (players.hasNext())
-		 {
-			 Player checkPlayer = players.next();
-			 
-			 if (checkPlayer != originPlayer)
-			 {
-				 double theDistance = origin.distance(checkPlayer.getLocation());
-				 if (theDistance < this.config.trackingRadius)
-				 {
-					 return null;
-				 }
-				 distances.put(origin.distance(checkPlayer.getLocation()), checkPlayer);
-			 }
-		 }
-		 
-		 if (distances.size() == 0)
-		 {
-			 return originPlayer;
-		 }
-		 return distances.get(Collections.min(distances.keySet()));
+	private String getTrackerResult(Iterator<Player> players, Location origin, Player originPlayer)
+	{
+		Hashtable<Double, Player> distances = new Hashtable<Double, Player>();
+		
+		while (players.hasNext())
+		{
+			Player checkPlayer = players.next();
+			if (checkPlayer != originPlayer)
+			{
+				double theDistance = origin.distance(checkPlayer.getLocation());
+				
+				if (theDistance < this.config.trackingRadius)
+				{
+					return Constants.messageNearby;
+				}
+			    
+				distances.put(origin.distance(checkPlayer.getLocation()), checkPlayer);
+			}
+		}
+		
+		if (distances.size() == 0)
+		{
+			return Constants.messageNoPlayers;
+		}
+		return String.format(Constants.messageDetected, this.getCompassDirection(origin, distances.get(Collections.min(distances.keySet())).getLocation()));
 	}
 	
 	public String getCompassDirection(Location firstLocation, Location secondLocation)
