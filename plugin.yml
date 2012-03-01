@@ -1,0 +1,10 @@
+name: WolfHunt
+main: me.Kruithne.WolfHunt.WolfHunt
+version: 1.0
+author: Kruithne
+description: Intergration to wolves to allow hunting in SMP.
+commands:
+  regionextras:
+    description: WolfHunt commands
+    usage: /wolfhunt [command] [parameter]
+    aliases: [wh]
