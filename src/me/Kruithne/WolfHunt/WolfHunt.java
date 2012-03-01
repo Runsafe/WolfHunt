@@ -1,5 +1,6 @@
 package me.Kruithne.WolfHunt;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,46 +37,34 @@ public class WolfHunt extends JavaPlugin {
 		Player closestPlayer = null;
 		Location playerLocation = player.getLocation();
 		
-		if (!worldPlayers.isEmpty())
+		Iterator<Player> loop = worldPlayers.iterator(); 
+		
+		while (loop.hasNext())
 		{
-			for (int playerIndex = 0; playerIndex < worldPlayers.size(); playerIndex++)
-			{
-				Player checkPlayer = worldPlayers.get(playerIndex);
+			Player checkPlayer = loop.next();
 				
-				if (checkPlayer != player)
+			if (checkPlayer != player)
+			{
+				Location checkLocation = checkPlayer.getLocation();
+				
+				if (playerLocation.distance(checkLocation) < this.config.trackingRadius)
 				{
-					Location checkLocation = checkPlayer.getLocation();
-					
-					if (playerLocation.distance(checkLocation) < this.config.trackingRadius)
+					this.outputToPlayer(Constants.messageNearby, player);
+					break;
+				}
+				else
+				{
+					if (closestPlayer == null || playerLocation.distance(checkLocation) < playerLocation.distance(closestPlayer.getLocation()))
 					{
-						this.outputToPlayer(Constants.messageNearby, player);
-						break;
-					}
-					else
-					{
-						if (closestPlayer == null)
-						{
-							closestPlayer = checkPlayer;
-						}
-						else
-						{
-							if (playerLocation.distance(checkLocation) < playerLocation.distance(closestPlayer.getLocation()))
-							{
-								closestPlayer = checkPlayer;
-							}
-						}
+						closestPlayer = checkPlayer;
 					}
 				}
 			}
-			
-			if (closestPlayer != null)
-			{
-				this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
-			}
-			else
-			{
-				this.outputToPlayer(Constants.messageNoPlayers, player);
-			}
+		}
+		
+		if (closestPlayer != null)
+		{
+			this.outputToPlayer(String.format(Constants.messageDetected, this.getCompassDirection(playerLocation, closestPlayer.getLocation())), player);
 		}
 		else
 		{
