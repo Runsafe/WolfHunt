@@ -12,27 +12,15 @@ public class WolfHunt extends JavaPlugin {
 	
 	Server server;
 	Logger log = Logger.getLogger("Minecraft");
+	Configuration config = null;
+	WolfHuntPlayerListener playerListener = null; 
 	
 	public void onEnable()
 	{
 		this.server = this.getServer();
+		this.config = new Configuration(this);
+		this.playerListener = new WolfHuntPlayerListener(this);
 		this.loadConfiguration();
-	}
-	
-	public String getConfigValue(String configKey)
-	{	
-		if (this.getConfig().contains(String.format(Constants.configNodePath, configKey)))
-		{
-			return this.getConfig().getString(String.format(Constants.configNodePath, configKey));
-		}
-		
-		return null;
-	}
-	
-	public void setConfigValue(String configKey, String configValue)
-	{
-		this.getConfig().set(configKey, configValue);
-		this.saveConfig();
 	}
 	
 	public void loadConfiguration()

@@ -2,7 +2,6 @@ package me.Kruithne.WolfHunt;
 
 public class Constants {
 	
-	public static boolean enabledDebug = false;
 	public static boolean enableVanishNoPacketSupport = false;
 	public static boolean trackOP = true;
 	
