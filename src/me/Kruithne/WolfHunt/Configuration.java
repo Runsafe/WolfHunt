@@ -22,10 +22,9 @@ public class Configuration {
 		}
 		else
 		{
-			this.setConfigValue(configKey, defaultValue);
+			this.setConfigValue(String.format(Constants.pluginNodePath, configKey), defaultValue);
+			return defaultValue;
 		}
-		
-		return defaultValue;
 	}
 	
 	public void setConfigValue(String configKey, String configValue)
