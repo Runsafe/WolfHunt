@@ -1,5 +1,7 @@
 package me.Kruithne.WolfHunt;
 
+import org.bukkit.Material;
+
 public class Constants {
 	
 	public static boolean enableVanishNoPacketSupport = false;
@@ -19,9 +21,11 @@ public class Constants {
 	public static String outputToConsoleFormat = "%s %s";
 	public static String outputToPlayerFormat = "%s%s";
 	
-	public static String configNodePath = "wolfhunt.%s";
+	public static String pluginNodePath = "wolfhunt.%s";
 	
 	public static String configDirectory = "plugins/WolfHunt";
 	public static String configFailed = "Failed to create the configuration file, using built-in configuration.";
+	
+	public static String default_trackingItem = Integer.toString(Material.STRING.getId());
 	
 }

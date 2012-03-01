@@ -8,9 +8,14 @@ This plug-in is intended for use in a survival enviroment where PvP is enabled.
 Permissions
 -----------
 
-Coming soon
+wolfhunt.canTrack - If true the player will be allowed to use the tracking item on wolves to hunt players.
 
 Commands
 --------
 
 Coming soon
+
+Configuration
+--------
+
+All configuration is stored in 'plugins/WolfHunt/config.yml' with information relating to the values.
