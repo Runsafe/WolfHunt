@@ -23,6 +23,7 @@ public class WolfHunt extends JavaPlugin {
 	Configuration config = null;
 	CommandHandler commandHandler = null;
 	WolfHuntPlayerListener playerListener = null;
+	Tracking tracking = null;
 	
 	public void onEnable()
 	{
@@ -30,7 +31,7 @@ public class WolfHunt extends JavaPlugin {
 		this.config = new Configuration(this);
 		this.playerListener = new WolfHuntPlayerListener(this);
 		this.commandHandler = new CommandHandler(this);
-		
+		this.tracking = new Tracking(this);		
 		this.config.loadConfiguration();
 	}
 	
