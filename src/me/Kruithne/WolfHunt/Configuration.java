@@ -43,7 +43,7 @@ public class Configuration {
 	
 	public void setConfigValue(String configKey, String configValue)
 	{
-		this.wolfHuntPlugin.getConfig().set(configKey, configValue);
+		this.wolfHuntPlugin.getConfig().set(String.format(Constants.pluginNodePath, configKey), configValue);
 		this.wolfHuntPlugin.saveConfig();
 	}
 	
