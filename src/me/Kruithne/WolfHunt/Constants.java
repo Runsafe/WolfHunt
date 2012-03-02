@@ -30,7 +30,7 @@ public class Constants {
 	public static String commandInfoSpawnWolf = String.format(Constants.commandInfoFormat, "spawnwolf", "Spawns an untamed wolf");
 	public static String commandInfoGetConfig = String.format(Constants.commandInfoFormat, "getconfig [key]", "Gets a config value");
 	public static String commandInfoSetConfig = String.format(Constants.commandInfoFormat, "getconfig [key] [value]", "Sets a config value");
-	public static String commandInfoReloadConfig = String.format(Constants.commandInfoFormat, "reload", "Reloads configuration from file");
+	public static String commandInfoReloadConfig = String.format(Constants.commandInfoFormat, "reloadconfig", "Reloads configuration from file");
 	
 	public static String commandInfoConfigNoExists = "That config value does not exist in WolfHunt";
 	public static String commandInfoGetConfigReturnFormat = "WolfHunt Config: %s = %s";
