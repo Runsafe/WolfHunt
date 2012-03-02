@@ -16,7 +16,7 @@ public class Tracking {
 		this.config = config;;
 	}
 	
-	public string trackPlayersRelativeTo(Player player)
+	public String trackPlayersRelativeTo(Player player)
 	{
 		Location origin = player.getLocation();
 		Iterator<Player> players = player.getWorld().getPlayers().iterator();
