@@ -10,8 +10,8 @@ public class Configuration {
 	public boolean babyWolvesCanTrack;
 	
 	public boolean preventTrackingOps;
-	
 	public boolean allowOpOverride;
+	public boolean enableVanishNoPacketSupport;
 	
 	Configuration(WolfHunt parentPlugin)
 	{
@@ -54,6 +54,7 @@ public class Configuration {
 		this.allowOpOverride = Boolean.parseBoolean(this.getOrSetConfigValue("allowOpOverride", Constants.default_allowOpOverride));
 		this.preventTrackingOps = Boolean.parseBoolean(this.getOrSetConfigValue("preventTrackingOps", Constants.default_preventTrackingOps));
 		this.babyWolvesCanTrack = Boolean.parseBoolean(this.getOrSetConfigValue("babyWolvesCanTrack", Constants.default_babyWolvesCanTrack));
+		this.enableVanishNoPacketSupport = Boolean.parseBoolean(this.getOrSetConfigValue("enableVanishNoPacketSupport", Constants.default_enableVanishNoPacketSupport));
 	}
 	
 }

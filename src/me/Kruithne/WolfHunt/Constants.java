@@ -45,5 +45,6 @@ public class Constants {
 	public static String default_allowOpOverride = "true";
 	public static String default_preventTrackingOps = "true";
 	public static String default_babyWolvesCanTrack = "false";
+	public static String default_enableVanishNoPacketSupport = "false";
 	
 }

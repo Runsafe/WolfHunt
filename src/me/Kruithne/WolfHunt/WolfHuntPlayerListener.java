@@ -30,6 +30,8 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean shouldTrackPlayers(PlayerInteractEntityEvent event)
 	{
+		Player eventPlayer = event.getPlayer();
+		
 		if (!this.isHoldingTrackingItem(event))
 			return false;
 
@@ -38,23 +40,29 @@ public class WolfHuntPlayerListener implements Listener
 		if (!this.isWolf(target))
 			return false;
 		
+		if (this.wolfHuntPlugin.config.enableVanishNoPacketSupport)
+		{
+			if (this.wolfHuntPlugin.playerIsVanished(eventPlayer))
+			{
+				return false;
+			}
+		}
+		
 		Wolf wolf = (Wolf)target;
 		
 		if (!this.wolfHuntPlugin.config.babyWolvesCanTrack)
 		{
 			if (isBaby(wolf))
 			{
-				this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, event.getPlayer());
+				this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, eventPlayer);
 				return false;
 			}
 		}
 		
-		Player player = event.getPlayer();
-		
-		if(!this.isPlayersWolf(wolf, player))
+		if(!this.isPlayersWolf(wolf, eventPlayer))
 			return false;
 		
-		return this.allowedTrack(player);
+		return this.allowedTrack(eventPlayer);
 	}
 	
 	private boolean isWolf(Entity entity)

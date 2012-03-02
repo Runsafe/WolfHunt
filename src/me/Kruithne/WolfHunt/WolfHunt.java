@@ -12,7 +12,9 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kitteh.vanish.VanishPlugin;
 
 public class WolfHunt extends JavaPlugin {
 	
@@ -115,6 +117,29 @@ public class WolfHunt extends JavaPlugin {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	public boolean vanishNoPacketIsRunning(Plugin vanish)
+	{		
+		if (vanish != null)
+		{
+			if (vanish.isEnabled())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean playerIsVanished(Player player)
+	{
+		VanishPlugin vanish = (VanishPlugin) this.server.getPluginManager().getPlugin("VanishNoPacket");
+		
+		if (this.vanishNoPacketIsRunning(vanish))
+		{
+			return vanish.getManager().isVanished(player);
+		}
 		return false;
 	}
 
