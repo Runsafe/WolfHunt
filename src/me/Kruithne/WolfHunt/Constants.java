@@ -4,9 +4,6 @@ import org.bukkit.Material;
 
 public class Constants {
 	
-	public static boolean enableVanishNoPacketSupport = false;
-	public static boolean trackOP = true;
-	
 	public static String messageNoPlayers = "The wolf's tail wags as it looks up at you";
 	public static String messageDetected = "The wolf barks in the %s direction";
 	public static String messageNearby = "The wolf growls loudly";
