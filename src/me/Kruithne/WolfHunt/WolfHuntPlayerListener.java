@@ -1,5 +1,7 @@
 package me.Kruithne.WolfHunt;
 
+import java.util.logging.Level;
+
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -22,7 +24,7 @@ public class WolfHuntPlayerListener implements Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(shouldTrackPlayers(event))
+		if (shouldTrackPlayers(event))
 		{
 			wolfHuntPlugin.trackPlayersRelativeTo(event.getPlayer());
 			event.setCancelled(true);
@@ -66,7 +68,7 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean isBaby(Wolf wolf)
 	{
-		return this.wolfHuntPlugin.config.babyWolvesCanTrack || wolf.getAge() >= 0;
+		return this.wolfHuntPlugin.config.babyWolvesCanTrack || wolf.getAge() < 0;
 	}
 
 	private boolean isHoldingTrackingItem(PlayerInteractEntityEvent event)
