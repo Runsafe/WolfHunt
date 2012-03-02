@@ -8,18 +8,23 @@ import org.kitteh.vanish.VanishPlugin;
 public class VanishHandler {
 
 	private Server server;
+	private Configuration config;
 	private VanishPlugin vanish = null;
 	private VanishManager vanishManager = null;
 	
 	private boolean initiated = false;
 	
-	VanishHandler(Server server)
+	VanishHandler(Server server, Configuration config)
 	{
 		this.server = server;
+		this.config = config;
 	}
 	
 	public boolean playerIsVanished(Player player)
 	{
+		if(!config.enableVanishNoPacketSupport)
+			return false;
+
 		VanishManager manager = getVanishManager();
 		return manager != null && manager.isVanished(player);
 	}
