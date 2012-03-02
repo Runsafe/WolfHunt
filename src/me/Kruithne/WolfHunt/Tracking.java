@@ -9,18 +9,18 @@ import org.bukkit.entity.Player;
 
 public class Tracking {
 
-	private WolfHunt wolfHuntPlugin = null;
+	private Configuration config = null;
 	
-	Tracking (WolfHunt plugin)
+	Tracking (Configuration config)
 	{
-		this.wolfHuntPlugin = plugin;
+		this.config = config;;
 	}
 	
-	public void trackPlayersRelativeTo(Player player)
+	public string trackPlayersRelativeTo(Player player)
 	{
 		Location origin = player.getLocation();
 		Iterator<Player> players = player.getWorld().getPlayers().iterator();
-		this.wolfHuntPlugin.outputToPlayer(getTrackerResult(players, origin, player), player);
+		return getTrackerResult(players, origin, player);
 	}
 	
 	private String getTrackerResult(Iterator<Player> players, Location origin, Player originPlayer)
@@ -33,7 +33,7 @@ public class Tracking {
 			if (canTrackPlayer(originPlayer, checkPlayer))
 			{
 				double theDistance = origin.distance(checkPlayer.getLocation());
-				if (theDistance < this.wolfHuntPlugin.config.trackingRadius)
+				if (theDistance < this.config.trackingRadius)
 					return Constants.messageNearby;
 				
 				distances.put(origin.distance(checkPlayer.getLocation()), checkPlayer);
@@ -50,7 +50,7 @@ public class Tracking {
 	{
 		if (tracker == tracked)
 			return false;
-		else if (this.wolfHuntPlugin.config.preventTrackingOps && tracked.isOp())
+		else if (this.config.preventTrackingOps && tracked.isOp())
 			return false;
 		return true;
 	}
