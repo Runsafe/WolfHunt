@@ -20,6 +20,8 @@ public class WolfHunt extends JavaPlugin {
 	public CommandHandler commandHandler = null;
 	public WolfHuntPlayerListener playerListener = null;
 	public Tracking tracking = null;
+	public VanishHandler vanisHandler = null;
+	
 	private VanishPlugin vanish = null;
 	private VanishManager vanishManager = null;
 	
@@ -39,7 +41,7 @@ public class WolfHunt extends JavaPlugin {
 		{
 			return true;
 		}
-		else if (player.hasPermission(String.format(Constants.pluginNodePath, permKey)))
+		else if (player.hasPermission(String.format(Permissions.permissionFormat, permKey)))
 		{
 			return true;
 		}
