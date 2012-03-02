@@ -23,8 +23,10 @@ public class WolfHuntPlayerListener implements Listener
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
 		if(shouldTrackPlayers(event))
+		{
 			wolfHuntPlugin.trackPlayersRelativeTo(event.getPlayer());
 		}
+	}
 
 	private boolean shouldTrackPlayers(PlayerInteractEntityEvent event)
 	{
