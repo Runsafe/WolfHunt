@@ -31,6 +31,8 @@ public class WolfHunt extends JavaPlugin {
 		this.vanishHandler = new VanishHandler(this.server);
 		this.output = new Output(this.log);
 		this.config.loadConfiguration();
+		
+		this.server.getPluginManager().registerEvents(this.commandHandler, this);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
