@@ -31,6 +31,8 @@ public class WolfHunt extends JavaPlugin {
 		this.output = new Output(this.log);
 		this.playerListener = new WolfHuntPlayerListener(this.tracking, this.output, this.vanishHandler, this.permission, this.config);
 		this.config.loadConfiguration();
+		
+		this.server.getPluginManager().registerEvents(this.commandHandler, this);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
