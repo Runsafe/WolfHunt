@@ -26,7 +26,7 @@ public class Configuration {
 		}
 		else
 		{
-			this.setConfigValue(String.format(Constants.pluginNodePath, configKey), defaultValue);
+			this.setConfigValue(configKey, defaultValue);
 			return defaultValue;
 		}
 	}
