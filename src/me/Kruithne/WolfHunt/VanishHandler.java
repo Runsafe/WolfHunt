@@ -11,6 +11,8 @@ public class VanishHandler {
 	private VanishPlugin vanish = null;
 	private VanishManager vanishManager = null;
 	
+	private boolean initiated = false;
+	
 	VanishHandler(Server server)
 	{
 		this.server = server;
@@ -24,11 +26,14 @@ public class VanishHandler {
 
 	private VanishManager getVanishManager()
 	{
-		if(vanishManager != null)
-			return vanishManager;
-	
-		if(vanish == null)
-			vanish = (VanishPlugin) this.server.getPluginManager().getPlugin("VanishNoPacket");
+			if(vanishManager != null)
+				return vanishManager;
+		
+			if(vanish == null && !this.initiated)
+			{
+				vanish = (VanishPlugin) this.server.getPluginManager().getPlugin("VanishNoPacket");
+				this.initiated = true;
+			}
 	
 		if(vanish != null && vanish.isEnabled())
 			vanishManager = this.vanish.getManager();
