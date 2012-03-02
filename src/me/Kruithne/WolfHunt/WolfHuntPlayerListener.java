@@ -31,7 +31,7 @@ public class WolfHuntPlayerListener implements Listener
 	{
 		if (shouldTrackPlayers(event))
 		{
-			Player player = event.getPlayer()
+			Player player = event.getPlayer();
 			this.output.toPlayer(this.tracking.trackPlayersRelativeTo(player), player);
 			event.setCancelled(true);
 		}
