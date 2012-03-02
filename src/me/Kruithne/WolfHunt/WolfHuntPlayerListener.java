@@ -1,7 +1,5 @@
 package me.Kruithne.WolfHunt;
 
-import java.util.logging.Level;
-
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
