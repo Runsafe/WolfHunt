@@ -21,6 +21,7 @@ public class WolfHunt extends JavaPlugin {
 	public WolfHuntPlayerListener playerListener = null;
 	public Tracking tracking = null;
 	public VanishHandler vanisHandler = null;
+	public Permissions permission = null;
 	
 	private VanishPlugin vanish = null;
 	private VanishManager vanishManager = null;
@@ -32,21 +33,13 @@ public class WolfHunt extends JavaPlugin {
 		this.playerListener = new WolfHuntPlayerListener(this);
 		this.commandHandler = new CommandHandler(this);
 		this.tracking = new Tracking(this);		
+		this.permission = new Permissions(this.config);
 		this.config.loadConfiguration();
 	}
 
 	public boolean hasPermission(String permKey, Player player)
 	{
-		if (player.isOp() && this.config.allowOpOverride)
-		{
-			return true;
-		}
-		else if (player.hasPermission(String.format(Permissions.permissionFormat, permKey)))
-		{
-			return true;
-		}
-		
-		return false;
+		return this.permission.has(player, permKey);
 	}
 	
 	public boolean playerIsVanished(Player player)
