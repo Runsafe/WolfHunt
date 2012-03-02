@@ -28,13 +28,18 @@ public class CommandHandler {
 		if (!command.getName().equalsIgnoreCase("wolfhunt") && !command.getName().equalsIgnoreCase("wh"))
 			return false;
 			
-		Player player = (Player) sender;
+		handleOperation((Player) sender, arguments);
 
+		return true;
+	}
+	
+	private void handleOperation(Player player, String[] arguments)
+	{
 		if (arguments.length < 1)
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoParameters, player);
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
-			return true;
+			return;
 		}
 
 		switch(GetAction(arguments[0]))
@@ -44,25 +49,24 @@ public class CommandHandler {
 				break;
 				
 			case spawnwolf:
-				spawnWolfCommand(player);
+				spawnWolfOperation(player);
 				break;
 			
 			case getconfig:
-				getConfigCommand(player, arguments);
+				getConfigOperation(player, arguments);
 				break;
 			
 			case setconfig:
-				setConfigCommand(player, arguments);
+				setConfigOperation(player, arguments);
 				break;
 
 			default:
 				this.wolfHuntPlugin.outputToPlayer(Constants.commandUnknown, player);
 				break;
 		}
-		return true;
 	}
 	
-	private WolfHuntOperation GetAction(String argument)
+	private WolfHuntOperation GetOperation(String argument)
 	{
 		try
 		{
@@ -74,7 +78,7 @@ public class CommandHandler {
 		}
 	}
 	
-	private void spawnWolfCommand(Player player)
+	private void spawnWolfOperation(Player player)
 	{
 		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandSpawnWolf", player))
 		{
@@ -88,7 +92,7 @@ public class CommandHandler {
 		}
 	}
 
-	private void getConfigCommand(Player player, String[] arguments)
+	private void getConfigOperation(Player player, String[] arguments)
 	{
 		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandGetConfig", player))
 		{
@@ -97,7 +101,14 @@ public class CommandHandler {
 				String configValue = this.wolfHuntPlugin.config.getConfigValue(arguments[1]);
 				if (configValue != null)
 				{
-					this.wolfHuntPlugin.outputToPlayer(String.format(Constants.commandInfoGetConfigReturnFormat, arguments[1], configValue), player);
+					this.wolfHuntPlugin.outputToPlayer(
+						String.format(
+							Constants.commandInfoGetConfigReturnFormat, 
+							arguments[1], 
+							configValue
+						), 
+						player
+					);
 				}
 				else
 				{
@@ -117,7 +128,7 @@ public class CommandHandler {
 		}
 	}
 
-	private void setConfigCommand(Player player, String[] arguments)
+	private void setConfigOperation(Player player, String[] arguments)
 	{
 		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandSetConfig", player))
 		{
@@ -129,7 +140,14 @@ public class CommandHandler {
 				{
 					this.wolfHuntPlugin.config.setConfigValue(arguments[1], arguments[2]);
 					this.wolfHuntPlugin.config.loadConfiguration();
-					this.wolfHuntPlugin.outputToPlayer(String.format(Constants.commandInfoSetConfigDone, arguments[1], arguments[2]), player);
+					this.wolfHuntPlugin.outputToPlayer(
+						String.format(
+							Constants.commandInfoSetConfigDone, 
+							arguments[1], 
+							arguments[2]
+						), 
+						player
+					);
 				}
 				else
 				{
@@ -150,7 +168,7 @@ public class CommandHandler {
 		}
 	}
 
-	public void printCommandHelp(CommandSender sender)
+	private void printCommandHelp(CommandSender sender)
 	{
 		Boolean hasCommand = false;
 		
@@ -158,19 +176,19 @@ public class CommandHandler {
 		
 		this.wolfHuntPlugin.outputToPlayer(Constants.commandAvailable, player);
 		
-		if (this.wolfHuntPlugin.hasPermission("commandSpawnWolf", player))
+		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandSpawnWolf", player))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolf, player);
 			hasCommand = true;
 		}
 		
-		if (this.wolfHuntPlugin.hasPermission("commandGetConfig", player))
+		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandGetConfig", player))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoGetConfig, player);
 			hasCommand = true;
 		}
 		
-		if (this.wolfHuntPlugin.hasPermission("commandSetConfig", player))
+		if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandSetConfig", player))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
 			hasCommand = true;
@@ -181,5 +199,4 @@ public class CommandHandler {
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoneAvail, (Player) sender);
 		}
 	}
-	
 }
