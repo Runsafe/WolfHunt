@@ -11,15 +11,22 @@ Permissions
 wolfhunt.canTrack - If true the player will be allowed to use the tracking item on wolves to hunt players.
 
 wolfhunt.commandSpawnWolf - If true the player will be able to use the wolf spawning command. (Used for debugging)
+wolfhunt.commandGetConfig - Allows the player to get config values for WolfHunt.
+wolfhunt.commandSetConfig - Allows the player to set the config values for WolfHunt.
+wolfhunt.commandReloadConfig - Allows the player to reload WolfHunt's configuration from file.
 
 Commands
 --------
 
 /wolfhunt spawnwolf - Spawns an untamed wolf. [Permission: wolfhunt.commandSpawnWolf]
+/wolfhunt getconfig [key] - Returns the config value of the specified key. [Permission: wolfhunt.commandGetConfig]
+/wolfhunt setconfig [key] [value] - Sets the config value of the specified key. [Permission: wolfhunt.commandSetConfig]
+/wolfhunt reloadconfig - Reloads WolfHunt's configuration from file. [Permission: wolfhunt.commandReloadConfig]
 
 Configuration
 --------
 
+preventTrackingOps [Default: true] - If true, server OPs will not be tracked by wolves.
 allowOpOverride - [Default: false] - If true, being a server OP will override all WolfHunt permissions.
 
 trackingItem - [Default: 287] - The item used to track players when right clicked on an owned wolf.

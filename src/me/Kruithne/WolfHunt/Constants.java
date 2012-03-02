@@ -22,10 +22,18 @@ public class Constants {
 	public static String commandSeeHelp = "See '/wolfhunt help' for available commands";
 	public static String commandAvailable = "Your available commands for WolfHunt:";
 	public static String commandNoneAvail = "No available commands found";
-	public static String commandUnknown = "Unknown commmand '%s' entered";	
+	public static String commandUnknown = "Unknown commmand '%s' entered";
+	public static String commandFormatInvalid = "Invalid command format";
 	public static String commandInfoFormat = "- '/wolfhunt %s' - %s";
+	public static String commandNoPermission = "You do not have permission to use that command";
 	
 	public static String commandInfoSpawnWolf = String.format(Constants.commandInfoFormat, "spawnwolf", "Spawns an untamed wolf");
+	public static String commandInfoGetConfig = String.format(Constants.commandInfoFormat, "getconfig [key]", "Gets a config value");
+	public static String commandInfoSetConfig = String.format(Constants.commandInfoFormat, "getconfig [key] [value]", "Sets a config value");
+	
+	public static String commandInfoConfigNoExists = "That config value does not exist in WolfHunt";
+	public static String commandInfoGetConfigReturnFormat = "WolfHunt Config: %s = %s";
+	public static String commandInfoSetConfigDone = "Configration value '%s' has been set to '%s'";
 	
 	public static String commandInfoSpawnWolfDone = "Spawned an untamed wolf at your location";
 	
