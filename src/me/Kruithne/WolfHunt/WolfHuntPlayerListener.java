@@ -61,7 +61,7 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean playerIsVanished(Player player)
 	{
-		return this.wolfHuntPlugin.config.enableVanishNoPacketSupport && this.wolfHuntPlugin.playerIsVanished(player);
+		return this.wolfHuntPlugin.config.enableVanishNoPacketSupport && this.wolfHuntPlugin.vanishHandler.playerIsVanished(player);
 	}
 
 	private boolean isBaby(Wolf wolf)

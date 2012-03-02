@@ -9,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.kitteh.vanish.VanishManager;
-import org.kitteh.vanish.VanishPlugin;
 
 public class WolfHunt extends JavaPlugin {
 	
@@ -22,9 +20,7 @@ public class WolfHunt extends JavaPlugin {
 	public Tracking tracking = null;
 	public VanishHandler vanisHandler = null;
 	public Permissions permission = null;
-	
-	private VanishPlugin vanish = null;
-	private VanishManager vanishManager = null;
+	public VanishHandler vanishHandler = null;
 	
 	public void onEnable()
 	{
@@ -34,28 +30,10 @@ public class WolfHunt extends JavaPlugin {
 		this.commandHandler = new CommandHandler(this);
 		this.tracking = new Tracking(this);		
 		this.permission = new Permissions(this.config);
+		this.vanishHandler = new VanishHandler(this.server);
 		this.config.loadConfiguration();
 	}
 	
-	public boolean playerIsVanished(Player player)
-	{
-		VanishManager manager = getVanishManager();
-		return manager != null && manager.isVanished(player);
-	}
-
-	public VanishManager getVanishManager()
-	{
-		if(vanishManager != null)
-			return vanishManager;
-	
-		if(vanish == null)
-			vanish = (VanishPlugin) this.server.getPluginManager().getPlugin("VanishNoPacket");
-	
-		if(vanish != null && vanish.isEnabled())
-			vanishManager = this.vanish.getManager();
-	
-		return vanishManager;
-	}
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
 	{
 		return this.commandHandler.handleCommand(sender, command, arguments);
