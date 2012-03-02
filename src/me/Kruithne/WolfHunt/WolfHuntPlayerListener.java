@@ -55,7 +55,6 @@ public class WolfHuntPlayerListener implements Listener
 		{
 			if (isBaby(wolf))
 			{
-				this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, eventPlayer);
 				return false;
 			}
 		}
