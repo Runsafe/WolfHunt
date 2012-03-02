@@ -23,23 +23,32 @@ public class WolfHuntPlayerListener implements Listener
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
 		Player eventPlayer = event.getPlayer();
-		
-		if (eventPlayer.getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem)
+		if (isHoldingTrackingItem(event))
 		{
 			Entity interactedEntity = event.getRightClicked();
-			
 			if (interactedEntity.getType() == EntityType.WOLF)
 			{
 				Wolf interactedWolf = (Wolf) interactedEntity;
-				
-				if (interactedWolf.isTamed() && interactedWolf.getOwner() == (AnimalTamer) eventPlayer)
+				if (shouldTrack(interactedWolf, eventPlayer) && allowedTrack(eventPlayer))
 				{
-					if (this.wolfHuntPlugin.hasPermission("canTrack", eventPlayer))
-					{
-						this.wolfHuntPlugin.trackPlayers(eventPlayer);
-					}
+					this.wolfHuntPlugin.trackPlayers(eventPlayer);
 				}
 			}
 		}
+	}
+
+	private boolean isHoldingTrackingItem(PlayerInteractEntityEvent event)
+	{
+		return event.getPlayer().getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem;
+	}
+
+	private boolean shouldTrack(Wolf wolf, Player player)
+	{
+		return wolf.isTamed() && wolf.getOwner() == (AnimalTamer)player;
+	}
+
+	private boolean allowedTrack(Player player)
+	{
+		return this.wolfHuntPlugin.hasPermission("canTrack", player);
 	}
 }
