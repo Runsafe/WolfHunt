@@ -13,7 +13,6 @@ wolfhunt.canTrack - If true the player will be allowed to use the tracking item 
 wolfhunt.commandSpawnWolf - If true the player will be able to use the wolf spawning command. (Used for debugging)
 wolfhunt.commandGetConfig - Allows the player to get config values for WolfHunt.
 wolfhunt.commandSetConfig - Allows the player to set the config values for WolfHunt.
-wolfhunt.commandReloadConfig - Allows the player to reload WolfHunt's configuration from file.
 
 Commands
 --------
@@ -21,7 +20,6 @@ Commands
 /wolfhunt spawnwolf - Spawns an untamed wolf. [Permission: wolfhunt.commandSpawnWolf]
 /wolfhunt getconfig [key] - Returns the config value of the specified key. [Permission: wolfhunt.commandGetConfig]
 /wolfhunt setconfig [key] [value] - Sets the config value of the specified key. [Permission: wolfhunt.commandSetConfig]
-/wolfhunt reloadconfig - Reloads WolfHunt's configuration from file. [Permission: wolfhunt.commandReloadConfig]
 
 Configuration
 --------

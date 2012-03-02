@@ -97,23 +97,6 @@ public class CommandHandler {
 						this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
 					}
 				}
-				else if (arguments[0].equalsIgnoreCase("reloadConfig"))
-				{
-					if (this.wolfHuntPlugin.hasPermission("wolfhunt.commandReloadConfig", player))
-					{
-						this.wolfHuntPlugin.config.loadConfiguration();
-					}
-					else
-					{
-						this.wolfHuntPlugin.outputToPlayer(Constants.commandNoPermission, player);
-						this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
-					}
-				}
-				else
-				{
-					this.wolfHuntPlugin.outputToPlayer(String.format(Constants.commandUnknown, arguments[0]), player);
-					this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
-				}
 			}
 			else
 			{
@@ -148,12 +131,6 @@ public class CommandHandler {
 		if (this.wolfHuntPlugin.hasPermission("commandSetConfig", player))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
-			hasCommand = true;
-		}
-		
-		if (this.wolfHuntPlugin.hasPermission("commandReloadConfig", player))
-		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoReloadConfig, player);
 			hasCommand = true;
 		}
 		
