@@ -11,12 +11,19 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class WolfHuntPlayerListener implements Listener
 {
-	private WolfHunt wolfHuntPlugin = null;
+	private Tracking tracking = null;
+	private Output output = null;
+	private VanishHandler vanish = null;
+	private Permissions permission = null;
+	private Configuration config = null;
 	
-	WolfHuntPlayerListener(WolfHunt plugin)
+	WolfHuntPlayerListener(Tracking tracking, Output output, VanishHandler vanish, Permissions permission, Configuration config)
 	{
-		this.wolfHuntPlugin = plugin;
-		this.wolfHuntPlugin.server.getPluginManager().registerEvents(this, this.wolfHuntPlugin);
+		this.tracking = tracking;
+		this.output = output;
+		this.vanish = vanish;
+		this.permission = permission;
+		this.config = config;
 	}
 	
 	@EventHandler
@@ -24,7 +31,8 @@ public class WolfHuntPlayerListener implements Listener
 	{
 		if (shouldTrackPlayers(event))
 		{
-			wolfHuntPlugin.tracking.trackPlayersRelativeTo(event.getPlayer());
+			Player player = event.getPlayer()
+			this.output.toPlayer(this.tracking.trackPlayersRelativeTo(player), player);
 			event.setCancelled(true);
 		}
 	}
@@ -61,17 +69,17 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean playerIsVanished(Player player)
 	{
-		return this.wolfHuntPlugin.config.enableVanishNoPacketSupport && this.wolfHuntPlugin.vanishHandler.playerIsVanished(player);
+		return this.vanish.playerIsVanished(player);
 	}
 
 	private boolean isBaby(Wolf wolf)
 	{
-		return this.wolfHuntPlugin.config.babyWolvesCanTrack || wolf.getAge() < 0;
+		return !this.config.babyWolvesCanTrack && wolf.getAge() < 0;
 	}
 
 	private boolean isHoldingTrackingItem(PlayerInteractEntityEvent event)
 	{
-		return event.getPlayer().getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem;
+		return event.getPlayer().getItemInHand().getTypeId() == this.config.trackingItem;
 	}
 
 	private boolean isPlayersWolf(Wolf wolf, Player player)
@@ -81,6 +89,6 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean allowedTrack(Player player)
 	{
-		return this.wolfHuntPlugin.permission.has(player, Permissions.canTrack);
+		return this.permission.has(player, Permissions.canTrack);
 	}
 }
