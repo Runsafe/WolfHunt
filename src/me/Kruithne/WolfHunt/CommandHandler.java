@@ -37,8 +37,8 @@ public class CommandHandler {
 	{
 		if (arguments.length < 1)
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoParameters, player);
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandNoParameters, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandSeeHelp, player);
 			return;
 		}
 
@@ -61,7 +61,7 @@ public class CommandHandler {
 				break;
 
 			default:
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandUnknown, player);
+				this.wolfHuntPlugin.output.toPlayer(Constants.commandUnknown, player);
 				break;
 		}
 	}
@@ -83,12 +83,12 @@ public class CommandHandler {
 		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSpawnWolf))
 		{
 			player.getWorld().spawnCreature(player.getLocation(), EntityType.WOLF);
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolfDone, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoSpawnWolfDone, player);
 		}
 		else
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoPermission, player);
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandNoPermission, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandSeeHelp, player);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class CommandHandler {
 				String configValue = this.wolfHuntPlugin.config.getConfigValue(arguments[1]);
 				if (configValue != null)
 				{
-					this.wolfHuntPlugin.outputToPlayer(
+					this.wolfHuntPlugin.output.toPlayer(
 						String.format(
 							Constants.commandInfoGetConfigReturnFormat, 
 							arguments[1], 
@@ -112,19 +112,19 @@ public class CommandHandler {
 				}
 				else
 				{
-					this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoConfigNoExists, player);
+					this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoConfigNoExists, player);
 				}
 			}
 			else
 			{
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandFormatInvalid, player);
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoGetConfig, player);
+				this.wolfHuntPlugin.output.toPlayer(Constants.commandFormatInvalid, player);
+				this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoGetConfig, player);
 			}
 		}
 		else
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoPermission, player);
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandNoPermission, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandSeeHelp, player);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class CommandHandler {
 				{
 					this.wolfHuntPlugin.config.setConfigValue(arguments[1], arguments[2]);
 					this.wolfHuntPlugin.config.loadConfiguration();
-					this.wolfHuntPlugin.outputToPlayer(
+					this.wolfHuntPlugin.output.toPlayer(
 						String.format(
 							Constants.commandInfoSetConfigDone, 
 							arguments[1], 
@@ -151,20 +151,20 @@ public class CommandHandler {
 				}
 				else
 				{
-					this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoConfigNoExists, player);
+					this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoConfigNoExists, player);
 				}
 		
 			}
 			else
 			{
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandFormatInvalid, player);
-				this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
+				this.wolfHuntPlugin.output.toPlayer(Constants.commandFormatInvalid, player);
+				this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoSetConfig, player);
 			}
 		}
 		else
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoPermission, player);
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandSeeHelp, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandNoPermission, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandSeeHelp, player);
 		}
 	}
 
@@ -174,29 +174,29 @@ public class CommandHandler {
 		
 		Player player = (Player) sender;
 		
-		this.wolfHuntPlugin.outputToPlayer(Constants.commandAvailable, player);
+		this.wolfHuntPlugin.output.toPlayer(Constants.commandAvailable, player);
 		
 		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSpawnWolf))
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolf, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoSpawnWolf, player);
 			hasCommand = true;
 		}
 		
 		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandGetConfig))
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoGetConfig, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoGetConfig, player);
 			hasCommand = true;
 		}
 		
 		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSetConfig))
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandInfoSetConfig, player);
 			hasCommand = true;
 		}
 		
 		if (!hasCommand)
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandNoneAvail, (Player) sender);
+			this.wolfHuntPlugin.output.toPlayer(Constants.commandNoneAvail, (Player) sender);
 		}
 	}
 }

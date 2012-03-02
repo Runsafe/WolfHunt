@@ -1,13 +1,10 @@
 package me.Kruithne.WolfHunt;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class WolfHunt extends JavaPlugin {
@@ -21,6 +18,7 @@ public class WolfHunt extends JavaPlugin {
 	public VanishHandler vanisHandler = null;
 	public Permissions permission = null;
 	public VanishHandler vanishHandler = null;
+	public Output output = null;
 	
 	public void onEnable()
 	{
@@ -31,22 +29,13 @@ public class WolfHunt extends JavaPlugin {
 		this.tracking = new Tracking(this.config);		
 		this.permission = new Permissions(this.config);
 		this.vanishHandler = new VanishHandler(this.server);
+		this.output = new Output(this.log);
 		this.config.loadConfiguration();
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
 	{
 		return this.commandHandler.handleCommand(sender, command, arguments);
-	}
-	
-	public void outputToConsole(String message, Level outputType)
-	{
-		this.log.log(outputType, String.format(Constants.outputToConsoleFormat, Constants.outputPluginTag, message));
-	}
-	
-	public void outputToPlayer(String message, Player player)
-	{
-		player.sendMessage(String.format(Constants.outputToPlayerFormat, ChatColor.DARK_AQUA, message));
 	}
 
 }
