@@ -36,11 +36,6 @@ public class WolfHunt extends JavaPlugin {
 		this.permission = new Permissions(this.config);
 		this.config.loadConfiguration();
 	}
-
-	public boolean hasPermission(String permKey, Player player)
-	{
-		return this.permission.has(player, permKey);
-	}
 	
 	public boolean playerIsVanished(Player player)
 	{

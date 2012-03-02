@@ -81,6 +81,6 @@ public class WolfHuntPlayerListener implements Listener
 
 	private boolean allowedTrack(Player player)
 	{
-		return this.wolfHuntPlugin.hasPermission(Permissions.canTrack, player);
+		return this.wolfHuntPlugin.permission.has(player, Permissions.canTrack);
 	}
 }

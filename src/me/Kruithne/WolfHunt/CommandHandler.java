@@ -80,7 +80,7 @@ public class CommandHandler {
 	
 	private void spawnWolfOperation(Player player)
 	{
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandSpawnWolf, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSpawnWolf))
 		{
 			player.getWorld().spawnCreature(player.getLocation(), EntityType.WOLF);
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolfDone, player);
@@ -94,7 +94,7 @@ public class CommandHandler {
 
 	private void getConfigOperation(Player player, String[] arguments)
 	{
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandGetConfig, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandGetConfig))
 		{
 			if (arguments.length > 1)
 			{
@@ -130,7 +130,7 @@ public class CommandHandler {
 
 	private void setConfigOperation(Player player, String[] arguments)
 	{
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandSetConfig, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSetConfig))
 		{
 			if (arguments.length > 2)
 			{
@@ -176,19 +176,19 @@ public class CommandHandler {
 		
 		this.wolfHuntPlugin.outputToPlayer(Constants.commandAvailable, player);
 		
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandSpawnWolf, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSpawnWolf))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolf, player);
 			hasCommand = true;
 		}
 		
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandGetConfig, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandGetConfig))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoGetConfig, player);
 			hasCommand = true;
 		}
 		
-		if (this.wolfHuntPlugin.hasPermission(Permissions.commandSetConfig, player))
+		if (this.wolfHuntPlugin.permission.has(player, Permissions.commandSetConfig))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
 			hasCommand = true;
