@@ -73,26 +73,26 @@ public class WolfHunt extends JavaPlugin {
 		double h = a.getZ() - b.getZ();
 
 		String hDir = h < 0 ? Constants.directionWest : Constants.directionEast;
-		String vDir = v < 0 ? Constants.directionNorth : Constants.directionSouth;
+		String vDir = v < 0 ? Constants.directionSouth : Constants.directionNorth;
 	
 		if(v == 0)
 		{
 			v = 0.1;
 		}
 	
-		double angle = Math.cos(Math.abs(v) / a.distance(b));
+		double angle = Math.asin(Math.abs(v) / a.distance(b));
 		
-		if(angle <= 22.5)
+		if(angle <= 0.3927)
 		{
 			return hDir;
 		}
-		else if(angle >= 67.5)
+		else if(angle >= 1.1781)
 		{
 			return vDir;
 		}
 		else
 		{
-			return hDir + "-" + vDir;
+			return vDir + "-" + hDir;
 		}
 	}
 	
