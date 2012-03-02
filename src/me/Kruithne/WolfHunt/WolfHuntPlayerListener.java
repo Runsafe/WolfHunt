@@ -25,6 +25,7 @@ public class WolfHuntPlayerListener implements Listener
 		if(shouldTrackPlayers(event))
 		{
 			wolfHuntPlugin.trackPlayersRelativeTo(event.getPlayer());
+			event.setCancelled(true);
 		}
 	}
 
