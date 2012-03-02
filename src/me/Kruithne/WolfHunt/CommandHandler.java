@@ -77,6 +77,7 @@ public class CommandHandler {
 							if (configValueCheck != null)
 							{
 								this.wolfHuntPlugin.config.setConfigValue(arguments[1], arguments[2]);
+								this.wolfHuntPlugin.config.loadConfiguration();
 								this.wolfHuntPlugin.outputToPlayer(String.format(Constants.commandInfoSetConfigDone, arguments[1], arguments[2]), player);
 							}
 							else
