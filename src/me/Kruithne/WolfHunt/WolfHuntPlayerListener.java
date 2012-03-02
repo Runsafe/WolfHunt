@@ -13,9 +13,9 @@ public class WolfHuntPlayerListener implements Listener
 {
 	private WolfHunt wolfHuntPlugin = null;
 	
-	WolfHuntPlayerListener(WolfHunt parentPlugin)
+	WolfHuntPlayerListener(WolfHunt plugin)
 	{
-		this.wolfHuntPlugin = parentPlugin;
+		this.wolfHuntPlugin = plugin;
 		this.wolfHuntPlugin.server.getPluginManager().registerEvents(this, this.wolfHuntPlugin);
 	}
 	

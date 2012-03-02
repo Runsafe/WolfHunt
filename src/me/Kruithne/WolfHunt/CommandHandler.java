@@ -18,9 +18,9 @@ public class CommandHandler {
 		unknown
 	}
 	
-	CommandHandler (WolfHunt parentPlugin)
+	CommandHandler (WolfHunt plugin)
 	{
-		this.wolfHuntPlugin = parentPlugin;
+		this.wolfHuntPlugin = plugin;
 	}
 	
 	public boolean handleCommand(CommandSender sender, Command command, String[] arguments)

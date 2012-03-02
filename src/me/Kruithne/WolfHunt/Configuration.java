@@ -13,9 +13,9 @@ public class Configuration {
 	public boolean allowOpOverride;
 	public boolean enableVanishNoPacketSupport;
 	
-	Configuration(WolfHunt parentPlugin)
+	Configuration(WolfHunt plugin)
 	{
-		this.wolfHuntPlugin = parentPlugin;
+		this.wolfHuntPlugin = plugin;
 	}
 
 	public String getOrSetConfigValue(String configKey, String defaultValue)
