@@ -56,7 +56,7 @@ public class CommandHandler {
 				break;
 
 			default:
-				this.wolfHuntPlugin.outputToPlayer("Unknown argument", player);
+				this.wolfHuntPlugin.outputToPlayer(Constants.commandUnknown, player);
 				break;
 		}
 		return true;
