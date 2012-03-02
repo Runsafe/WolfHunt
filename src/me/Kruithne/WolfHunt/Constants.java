@@ -37,8 +37,6 @@ public class Constants {
 	
 	public static String commandInfoSpawnWolfDone = "Spawned an untamed wolf at your location";
 	
-	public static String pluginConfigFile = "plugins/WolfHunt/config.yml";
-	
 	public static String outputPluginTag = "[WolfHunt]";
 	public static String outputToConsoleFormat = "%s %s";
 	public static String outputToPlayerFormat = "%s%s";
