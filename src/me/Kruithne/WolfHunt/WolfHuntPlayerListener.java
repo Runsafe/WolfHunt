@@ -35,7 +35,7 @@ public class WolfHuntPlayerListener implements Listener
 
 		Entity target = event.getRightClicked();
 		
-		if (this.isWolf(target))
+		if (!this.isWolf(target))
 			return false;
 		
 		Wolf wolf = (Wolf)target;
