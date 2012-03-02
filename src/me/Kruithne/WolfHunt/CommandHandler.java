@@ -42,7 +42,7 @@ public class CommandHandler {
 			return;
 		}
 
-		switch(GetAction(arguments[0]))
+		switch(GetOperation(arguments[0]))
 		{
 			case help:
 				printCommandHelp(player);
