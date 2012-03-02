@@ -38,13 +38,14 @@ public class WolfHuntPlayerListener implements Listener
 		if (!this.isWolf(target))
 			return false;
 		
-		if (isBaby(target))
+		Wolf wolf = (Wolf)target;
+		
+		if (isBaby(wolf))
 		{
 			this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, event.getPlayer());
 			return false;
 		}
 		
-		Wolf wolf = (Wolf)target;
 		Player player = event.getPlayer();
 		
 		if(!this.isPlayersWolf(wolf, player))
@@ -58,9 +59,9 @@ public class WolfHuntPlayerListener implements Listener
 		return entity.getType() == EntityType.WOLF;
 	}
 	
-	private boolean isBaby(Entity entity)
+	private boolean isBaby(Wolf wolf)
 	{
-		return entity.getTicksLived() < 0;
+		return wolf.getAge() < 0;
 	}
 
 	private boolean isHoldingTrackingItem(PlayerInteractEntityEvent event)
