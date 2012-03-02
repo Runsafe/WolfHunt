@@ -14,12 +14,12 @@ import org.kitteh.vanish.VanishPlugin;
 
 public class WolfHunt extends JavaPlugin {
 	
-	Server server;
-	Logger log = Logger.getLogger("Minecraft");
-	Configuration config = null;
-	CommandHandler commandHandler = null;
-	WolfHuntPlayerListener playerListener = null;
-	Tracking tracking = null;
+	public Server server;
+	public Logger log = Logger.getLogger("Minecraft");
+	public Configuration config = null;
+	public CommandHandler commandHandler = null;
+	public WolfHuntPlayerListener playerListener = null;
+	public Tracking tracking = null;
 	
 	public void onEnable()
 	{
@@ -45,7 +45,7 @@ public class WolfHunt extends JavaPlugin {
 		return false;
 	}
 	
-	public boolean vanishNoPacketIsRunning(Plugin vanish)
+	private boolean vanishNoPacketIsRunning(Plugin vanish)
 	{		
 		if (vanish != null)
 		{
