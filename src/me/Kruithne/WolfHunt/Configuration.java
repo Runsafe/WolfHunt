@@ -7,6 +7,8 @@ public class Configuration {
 	public int trackingItem;
 	public int trackingRadius;
 	
+	public boolean preventTrackingOps;
+	
 	public boolean allowOpOverride;
 	
 	Configuration(WolfHunt parentPlugin)
@@ -38,6 +40,7 @@ public class Configuration {
 		this.trackingItem = Integer.parseInt(this.getConfigValue("trackingItem", Constants.default_trackingItem));
 		this.trackingRadius = Integer.parseInt(this.getConfigValue("trackingRadius", Constants.default_trackingRadius));
 		this.allowOpOverride = Boolean.parseBoolean(this.getConfigValue("allowOpOverride", Constants.default_allowOpOverride));
+		this.preventTrackingOps = Boolean.parseBoolean(this.getConfigValue("preventTrackingOps", Constants.default_preventTrackingOps));
 	}
 	
 }

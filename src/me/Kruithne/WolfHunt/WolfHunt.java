@@ -47,7 +47,7 @@ public class WolfHunt extends JavaPlugin {
 		while (players.hasNext())
 		{
 			Player checkPlayer = players.next();
-			if (checkPlayer != originPlayer)
+			if (canTrackPlayer(originPlayer, checkPlayer))
 			{
 				double theDistance = origin.distance(checkPlayer.getLocation());
 				
@@ -65,6 +65,19 @@ public class WolfHunt extends JavaPlugin {
 			return Constants.messageNoPlayers;
 		}
 		return String.format(Constants.messageDetected, this.getCompassDirection(origin, distances.get(Collections.min(distances.keySet())).getLocation()));
+	}
+	
+	private boolean canTrackPlayer(Player tracker, Player tracked)
+	{
+		if (tracker == tracked)
+		{
+			return false;
+		}
+		else if (this.config.preventTrackingOps && tracked.isOp())
+		{
+			return false;
+		}
+		return true;
 	}
 	
 	public String getCompassDirection(Location a, Location b)
