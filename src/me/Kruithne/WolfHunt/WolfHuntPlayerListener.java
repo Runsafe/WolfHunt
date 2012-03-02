@@ -22,19 +22,32 @@ public class WolfHuntPlayerListener implements Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		Player eventPlayer = event.getPlayer();
-		if (isHoldingTrackingItem(event))
-		{
-			Entity interactedEntity = event.getRightClicked();
-			if (interactedEntity.getType() == EntityType.WOLF)
-			{
-				Wolf interactedWolf = (Wolf) interactedEntity;
-				if (shouldTrack(interactedWolf, eventPlayer) && allowedTrack(eventPlayer))
-				{
-					this.wolfHuntPlugin.trackPlayers(eventPlayer);
-				}
-			}
+		if(shouldTrackPlayers(event))
+			wolfHuntPlugin.trackPlayersRelativeTo(event.getPlayer());
 		}
+
+	private boolean shouldTrackPlayers(PlayerInteractEntityEvent event)
+	{
+		if (!this.isHoldingTrackingItem(event))
+			return false;
+
+		Entity target = event.getRightClicked();
+		
+		if (this.isWolf(target))
+			return false;
+		
+		Wolf wolf = (Wolf)target;
+		Player player = event.getPlayer();
+		
+		if(!this.isPlayersWolf(wolf, player))
+			return false;
+		
+		return this.allowedTrack(player);
+	}
+	
+	private boolean isWolf(Entity entity)
+	{
+		return entity.getType() == EntityType.WOLF;
 	}
 
 	private boolean isHoldingTrackingItem(PlayerInteractEntityEvent event)
@@ -42,7 +55,7 @@ public class WolfHuntPlayerListener implements Listener
 		return event.getPlayer().getItemInHand().getTypeId() == this.wolfHuntPlugin.config.trackingItem;
 	}
 
-	private boolean shouldTrack(Wolf wolf, Player player)
+	private boolean isPlayersWolf(Wolf wolf, Player player)
 	{
 		return wolf.isTamed() && wolf.getOwner() == (AnimalTamer)player;
 	}

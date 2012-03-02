@@ -32,7 +32,7 @@ public class WolfHunt extends JavaPlugin {
 		this.config.loadConfiguration();
 	}
 	
-	public void trackPlayers(Player player)
+	public void trackPlayersRelativeTo(Player player)
 	{
 		Location origin = player.getLocation();
 		Iterator<Player> players = player.getWorld().getPlayers().iterator();
