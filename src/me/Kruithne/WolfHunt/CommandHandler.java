@@ -9,7 +9,7 @@ public class CommandHandler {
 
 	private WolfHunt wolfHuntPlugin = null;
 	
-	private enum WolfHuntCommand
+	private enum WolfHuntOperation
 	{
 		help,
 		spawnwolf,
@@ -62,15 +62,15 @@ public class CommandHandler {
 		return true;
 	}
 	
-	private WolfHuntCommand GetAction(String argument)
+	private WolfHuntOperation GetAction(String argument)
 	{
 		try
 		{
-			return WolfHuntCommand.valueOf(argument.toLowerCase());
+			return WolfHuntOperation.valueOf(argument.toLowerCase());
 		}
 		catch (IllegalArgumentException e)
 		{
-			return WolfHuntCommand.unknown;
+			return WolfHuntOperation.unknown;
 		}
 	}
 	
