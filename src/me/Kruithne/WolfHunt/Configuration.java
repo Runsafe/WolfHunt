@@ -7,6 +7,8 @@ public class Configuration {
 	public int trackingItem;
 	public int trackingRadius;
 	
+	public boolean babyWolvesCanTrack;
+	
 	public boolean preventTrackingOps;
 	
 	public boolean allowOpOverride;
@@ -41,6 +43,7 @@ public class Configuration {
 		this.trackingRadius = Integer.parseInt(this.getConfigValue("trackingRadius", Constants.default_trackingRadius));
 		this.allowOpOverride = Boolean.parseBoolean(this.getConfigValue("allowOpOverride", Constants.default_allowOpOverride));
 		this.preventTrackingOps = Boolean.parseBoolean(this.getConfigValue("preventTrackingOps", Constants.default_preventTrackingOps));
+		this.babyWolvesCanTrack = Boolean.parseBoolean(this.getConfigValue("babyWolvesCanTrack", Constants.default_babyWolvesCanTrack));
 	}
 	
 }

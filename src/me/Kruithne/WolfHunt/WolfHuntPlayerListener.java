@@ -40,10 +40,13 @@ public class WolfHuntPlayerListener implements Listener
 		
 		Wolf wolf = (Wolf)target;
 		
-		if (isBaby(wolf))
+		if (!this.wolfHuntPlugin.config.babyWolvesCanTrack)
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, event.getPlayer());
-			return false;
+			if (isBaby(wolf))
+			{
+				this.wolfHuntPlugin.outputToPlayer(Constants.messageBaby, event.getPlayer());
+				return false;
+			}
 		}
 		
 		Player player = event.getPlayer();
