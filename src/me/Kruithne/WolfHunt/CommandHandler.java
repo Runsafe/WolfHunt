@@ -129,11 +129,31 @@ public class CommandHandler {
 	{
 		Boolean hasCommand = false;
 		
-		this.wolfHuntPlugin.outputToPlayer(Constants.commandAvailable, (Player) sender);
+		Player player = (Player) sender;
 		
-		if (this.wolfHuntPlugin.hasPermission("commandSpawnWolf", (Player) sender))
+		this.wolfHuntPlugin.outputToPlayer(Constants.commandAvailable, player);
+		
+		if (this.wolfHuntPlugin.hasPermission("commandSpawnWolf", player))
 		{
-			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolf,(Player) sender);
+			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSpawnWolf, player);
+			hasCommand = true;
+		}
+		
+		if (this.wolfHuntPlugin.hasPermission("commandGetConfig", player))
+		{
+			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoGetConfig, player);
+			hasCommand = true;
+		}
+		
+		if (this.wolfHuntPlugin.hasPermission("commandSetConfig", player))
+		{
+			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoSetConfig, player);
+			hasCommand = true;
+		}
+		
+		if (this.wolfHuntPlugin.hasPermission("commandReloadConfig", player))
+		{
+			this.wolfHuntPlugin.outputToPlayer(Constants.commandInfoReloadConfig, player);
 			hasCommand = true;
 		}
 		
