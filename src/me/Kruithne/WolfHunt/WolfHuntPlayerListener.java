@@ -17,7 +17,7 @@ public class WolfHuntPlayerListener implements Listener
 	private Permissions permission = null;
 	private Configuration config = null;
 	
-	WolfHuntPlayerListener(Tracking tracking, Output output, VanishHandler vanish, Permissions permission, Configuration config)
+	WolfHuntPlayerListener(Tracking tracking, VanishHandler vanish, Permissions permission, Output output, Configuration config)
 	{
 		this.tracking = tracking;
 		this.output = output;
