@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class CommandHandler {
 
 	private Output output = null;
-	private Permission permission = null;
+	private Permissions permission = null;
 	private Configuration config = null;
 	
 	private enum WolfHuntOperation
@@ -20,7 +20,7 @@ public class CommandHandler {
 		unknown
 	}
 	
-	CommandHandler (Output output, Permission permission, Configuration config)
+	CommandHandler (Output output, Permissions permission, Configuration config)
 	{
 		this.output = output;
 		this.permission = permission;

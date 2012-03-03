@@ -21,7 +21,7 @@ public class WolfHunt extends JavaPlugin {
 	public void onEnable()
 	{
 		this.config = new Configuration(this);
-		this.commandHandler = new CommandHandler(this);
+		this.commandHandler = new CommandHandler(this.output, this.permission, this.config);
 		this.tracking = new Tracking(this.config);		
 		this.permission = new Permissions(this.config);
 		this.vanishHandler = new VanishHandler(this.getServer(), this.config);
