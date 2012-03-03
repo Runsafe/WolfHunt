@@ -1,12 +1,12 @@
 WolfHunt
 ========
 
-### Current Version: 1.1 R1
-### CraftBukkit Version: 1.2.2-R0.1-20120301.180527-8
-
 WolfHunt is a Minecraft CraftBukkit plug-in designed by the staff at minecraft.runsafe.no to allow players to use Wolves to track down other players within the world.
 
 This plug-in is intended for use in a survival environment where PvP is enabled.
+
+### Current Version: 1.1 R1
+### CraftBukkit Version: 1.2.2-R0.1-20120301.180527-8
 
 Permissions
 -----------
