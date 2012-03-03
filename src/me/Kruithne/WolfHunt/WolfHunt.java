@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class WolfHunt extends JavaPlugin {
 	
-	public Logger log = Logger.getLogger("Minecraft");
 	public Configuration config = null;
 	public CommandHandler commandHandler = null;
 	public WolfHuntPlayerListener playerListener = null;
@@ -21,11 +20,11 @@ public class WolfHunt extends JavaPlugin {
 	public void onEnable()
 	{
 		this.config = new Configuration(this);
-		this.commandHandler = new CommandHandler(this.output, this.permission, this.config);
 		this.tracking = new Tracking(this.config);		
 		this.permission = new Permissions(this.config);
 		this.vanishHandler = new VanishHandler(this.getServer(), this.config);
-		this.output = new Output(this.log);
+		this.output = new Output(Logger.getLogger("Minecraft"));
+		this.commandHandler = new CommandHandler(this.output, this.permission, this.config);
 		this.playerListener = new WolfHuntPlayerListener(this.tracking, this.output, this.vanishHandler, this.permission, this.config);
 		this.config.loadConfiguration();
 		
