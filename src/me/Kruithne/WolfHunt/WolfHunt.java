@@ -26,8 +26,8 @@ public class WolfHunt extends JavaPlugin {
 		this.output = new Output(Logger.getLogger("Minecraft"));
 		this.commandHandler = new CommandHandler(this.output, this.permission, this.config);
 		this.playerListener = new WolfHuntPlayerListener(this.tracking, this.output, this.vanishHandler, this.permission, this.config);
-		this.config.loadConfiguration();
 		
+		this.config.loadConfiguration();
 		this.getServer().getPluginManager().registerEvents(this.playerListener, this);
 	}
 	

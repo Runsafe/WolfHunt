@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="G:/Bukkit/craftbukkit-1.2.2-R0.1-20120301.180527-8.jar"/>
-	<classpathentry kind="lib" path="G:/Plug-ins/VanishNoPacket.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
