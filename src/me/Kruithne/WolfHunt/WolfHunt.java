@@ -27,12 +27,12 @@ public class WolfHunt extends JavaPlugin {
 		this.commandHandler = new CommandHandler(this);
 		this.tracking = new Tracking(this.config);		
 		this.permission = new Permissions(this.config);
-		this.vanishHandler = new VanishHandler(this.server);
+		this.vanishHandler = new VanishHandler(this.server, this.config);
 		this.output = new Output(this.log);
 		this.playerListener = new WolfHuntPlayerListener(this.tracking, this.output, this.vanishHandler, this.permission, this.config);
 		this.config.loadConfiguration();
 		
-		this.server.getPluginManager().registerEvents(this.commandHandler, this);
+		this.server.getPluginManager().registerEvents(this.playerListener, this);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
