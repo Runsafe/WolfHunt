@@ -21,7 +21,7 @@ Commands
 * /wolfhunt setconfig [key] [value] - Sets the config value of the specified key. [Permission: wolfhunt.commandSetConfig]
 
 Configuration
---------
+-------------
 
 * preventTrackingOps [Default: true] - If true, server OPs will not be tracked by wolves.
 * allowOpOverride - [Default: false] - If true, being a server OP will override all WolfHunt permissions.
@@ -29,3 +29,9 @@ Configuration
 * trackingRadius - [Default: 200] - If a player is within this radius the wolf will simply growl to alert the player instead of giving a direction.
 * babyWolvesCanTrack - [Default: false] - If true, baby wolves can be used to track other players.
 * enableVanishNoPacketSupport - [Default: false] - If true, the plugin will ignore players VanishNoPacket declares vanished.
+
+Building
+------------------
+
+* References CraftBukkit (Version: 1.2.2-R0.1-20120301.180527-8) [http://dl.bukkit.org/downloads/craftbukkit/]
+* References VanishNoPacket (Version: 3.5) [http://dev.bukkit.org/server-mods/vanish/]

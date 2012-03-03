@@ -19,11 +19,11 @@ public class WolfHunt extends JavaPlugin {
 	
 		this.commandHandler = new CommandHandler(output, permission, config);
 		this.playerListener = new WolfHuntPlayerListener(
-				new Tracking(config),
-				output,
-				new VanishHandler(this.getServer(), config),
-				permission,
-				config
+			new Tracking(config),
+			output,
+			new VanishHandler(this.getServer(), config),
+			permission,
+			config
 		);
 		this.getServer().getPluginManager().registerEvents(this.playerListener, this);
 	
