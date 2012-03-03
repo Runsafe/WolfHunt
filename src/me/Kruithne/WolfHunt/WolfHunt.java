@@ -8,27 +8,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class WolfHunt extends JavaPlugin {
 	
-	public Configuration config = null;
 	public CommandHandler commandHandler = null;
 	public WolfHuntPlayerListener playerListener = null;
-	public Tracking tracking = null;
-	public VanishHandler vanisHandler = null;
-	public Permissions permission = null;
-	public VanishHandler vanishHandler = null;
-	public Output output = null;
 	
 	public void onEnable()
 	{
-		this.config = new Configuration(this);
-		this.tracking = new Tracking(this.config);		
-		this.permission = new Permissions(this.config);
-		this.vanishHandler = new VanishHandler(this.getServer(), this.config);
-		this.output = new Output(Logger.getLogger("Minecraft"));
-		this.commandHandler = new CommandHandler(this.output, this.permission, this.config);
-		this.playerListener = new WolfHuntPlayerListener(this.tracking, this.output, this.vanishHandler, this.permission, this.config);
-		
-		this.config.loadConfiguration();
+		Configuration config = new Configuration(this);
+		Permissions permission = new Permissions(config);
+		Output output = new Output(Logger.getLogger("Minecraft"));
+	
+		this.commandHandler = new CommandHandler(output, permission, config);
+		this.playerListener = new WolfHuntPlayerListener(
+				new Tracking(config),
+				output,
+				new VanishHandler(this.getServer(), config),
+				permission,
+				config
+		);
 		this.getServer().getPluginManager().registerEvents(this.playerListener, this);
+	
+		config.loadConfiguration();
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] arguments)
