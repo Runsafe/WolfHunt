@@ -1,4 +1,4 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
 import org.bukkit.Material;
 

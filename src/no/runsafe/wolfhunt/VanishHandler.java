@@ -1,5 +1,6 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
+import no.runsafe.framework.api.player.IPlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.kitteh.vanish.VanishManager;
@@ -20,7 +21,7 @@ public class VanishHandler {
 		this.config = config;
 	}
 	
-	public boolean playerIsVanished(Player player)
+	public boolean playerIsVanished(IPlayer player)
 	{
 		if(!config.enableVanishNoPacketSupport)
 			return false;

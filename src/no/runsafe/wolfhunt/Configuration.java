@@ -1,7 +1,9 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
-public class Configuration {
-	
+import no.runsafe.framework.api.event.plugin.IPluginEnabled;
+
+public class Configuration implements IPluginEnabled
+{
 	private WolfHunt wolfHuntPlugin = null;
 	
 	public int trackingItem;
@@ -63,5 +65,11 @@ public class Configuration {
 	{
 		this.wolfHuntPlugin.getConfig().set(String.format(Constants.pluginNodePath, configKey), configValue);
 		this.wolfHuntPlugin.saveConfig();
+	}
+
+	@Override
+	public void OnPluginEnabled()
+	{
+		loadConfiguration();
 	}
 }

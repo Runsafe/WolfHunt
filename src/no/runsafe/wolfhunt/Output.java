@@ -1,8 +1,9 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import no.runsafe.framework.api.player.IPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -20,7 +21,7 @@ public class Output {
 		this.log.log(outputType, String.format(Constants.outputToConsoleFormat, Constants.outputPluginTag, message));
 	}
 	
-	public void toPlayer(String message, Player player)
+	public void toPlayer(String message, IPlayer player)
 	{
 		player.sendMessage(String.format(Constants.outputToPlayerFormat, ChatColor.DARK_AQUA, message));
 	}

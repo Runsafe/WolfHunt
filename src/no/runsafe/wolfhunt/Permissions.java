@@ -1,5 +1,6 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
+import no.runsafe.framework.api.player.IPlayer;
 import org.bukkit.entity.Player;
 
 public class Permissions {
@@ -17,7 +18,7 @@ public class Permissions {
 		this.config = config;
 	}
 	
-	public boolean has(Player player, String permission) 
+	public boolean has(IPlayer player, String permission)
 	{ 
 		if (player.isOp() && this.config.allowOpOverride) 
 			return true; 

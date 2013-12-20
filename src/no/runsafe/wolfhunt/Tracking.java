@@ -1,9 +1,10 @@
-package me.Kruithne.WolfHunt;
+package no.runsafe.wolfhunt;
 
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import no.runsafe.framework.api.player.IPlayer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -16,7 +17,7 @@ public class Tracking {
 		this.config = config;;
 	}
 	
-	public String trackPlayersRelativeTo(Player player)
+	public String trackPlayersRelativeTo(IPlayer player)
 	{
 		Location origin = player.getLocation();
 		Iterator<Player> players = player.getWorld().getPlayers().iterator();
