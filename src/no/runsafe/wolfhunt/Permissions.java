@@ -20,7 +20,7 @@ public class Permissions {
 	
 	public boolean has(IPlayer player, String permission)
 	{ 
-		if (player.isOp() && this.config.allowOpOverride) 
+		if (player.isOP() && this.config.allowOpOverride)
 			return true; 
 		else if (player.hasPermission(String.format(Permissions.permissionFormat, permission))) 
 			return true; 
