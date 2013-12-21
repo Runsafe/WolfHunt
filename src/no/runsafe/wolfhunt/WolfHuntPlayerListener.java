@@ -15,7 +15,7 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConf
 {
 	private Tracking tracking = null;
 
-	WolfHuntPlayerListener(Tracking tracking)
+	public WolfHuntPlayerListener(Tracking tracking)
 	{
 		this.tracking = tracking;
 	}
