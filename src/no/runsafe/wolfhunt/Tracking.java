@@ -1,6 +1,7 @@
 package no.runsafe.wolfhunt;
 
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.ILocalizer;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
@@ -12,6 +13,11 @@ import java.util.Iterator;
 
 public class Tracking implements IConfigurationChanged
 {
+	public Tracking(ILocalizer localizer)
+	{
+		this.tr = localizer;
+	}
+
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
@@ -38,16 +44,16 @@ public class Tracking implements IConfigurationChanged
 			{
 				double theDistance = origin.distance(checkPlayer.getLocation());
 				if (theDistance < trackingRadius)
-					return Constants.messageNearby;
+					return tr._("The wolf growls loudly");
 
 				distances.put(origin.distance(checkPlayer.getLocation()), checkPlayer);
 			}
 		}
 
 		if (distances.size() == 0)
-			return Constants.messageNoPlayers;
+			return tr._("The wolf's tail wags as it looks up at you");
 
-		return String.format(Constants.messageDetected, this.getCompassDirection(origin, distances.get(Collections.min(distances.keySet())).getLocation()));
+		return String.format(tr._("The wolf barks in the %s direction"), this.getCompassDirection(origin, distances.get(Collections.min(distances.keySet())).getLocation()));
 	}
 
 	private boolean canTrackPlayer(IPlayer tracker, IPlayer tracked)
@@ -64,8 +70,8 @@ public class Tracking implements IConfigurationChanged
 		double v = a.getX() - b.getX();
 		double h = a.getZ() - b.getZ();
 
-		String hDir = h < 0 ? Constants.directionWest : Constants.directionEast;
-		String vDir = v < 0 ? Constants.directionSouth : Constants.directionNorth;
+		String hDir = h < 0 ? tr._("west") : tr._("east");
+		String vDir = v < 0 ? tr._("south") : tr._("north");
 
 		double angle = Math.asin(Math.abs(v) / a.distance(b));
 
@@ -79,4 +85,5 @@ public class Tracking implements IConfigurationChanged
 
 	private boolean preventTrackingOps;
 	private double trackingRadius;
+	private final ILocalizer tr;
 }
