@@ -1,29 +1,31 @@
 package no.runsafe.wolfhunt;
 
+import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.LegacyMaterial;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
+import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Wolf;
 
-public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent
+public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConfigurationChanged
 {
 	private Tracking tracking = null;
-	private Output output = null;
-	private VanishHandler vanish = null;
-	private Permissions permission = null;
-	private Configuration config = null;
 
-	WolfHuntPlayerListener(Tracking tracking, VanishHandler vanish, Permissions permission, Output output, Configuration config)
+	WolfHuntPlayerListener(Tracking tracking)
 	{
 		this.tracking = tracking;
-		this.output = output;
-		this.vanish = vanish;
-		this.permission = permission;
-		this.config = config;
+	}
+
+	@Override
+	public void OnConfigurationChanged(IConfiguration configuration)
+	{
+		babyWolvesCanTrack = configuration.getConfigValueAsBoolean("babyWolvesCanTrack");
+		trackingItem = configuration.getConfigValueAsInt("trackingItem");
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent
 		if (shouldTrackPlayers(event))
 		{
 			IPlayer player = event.getPlayer();
-			this.output.toPlayer(this.tracking.trackPlayersRelativeTo(player), player);
+			player.sendColouredMessage(tracking.trackPlayersRelativeTo(player));
 			event.cancel();
 		}
 	}
@@ -48,7 +50,7 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent
 		if (!this.isWolf(target))
 			return false;
 
-		if (this.playerIsVanished(eventPlayer))
+		if (eventPlayer.isVanished())
 			return false;
 
 		Wolf wolf = (Wolf) target;
@@ -67,19 +69,15 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent
 		return entity.getEntityType().getRaw() == EntityType.WOLF;
 	}
 
-	private boolean playerIsVanished(IPlayer player)
-	{
-		return this.vanish.playerIsVanished(player);
-	}
-
 	private boolean isBaby(Wolf wolf)
 	{
-		return !this.config.babyWolvesCanTrack && wolf.getAge() < 0;
+		return !babyWolvesCanTrack && wolf.getAge() < 0;
 	}
 
 	private boolean isHoldingTrackingItem(RunsafePlayerInteractEntityEvent event)
 	{
-		return event.getPlayer().getItemInHand().getItemType().getType() == LegacyMaterial.getById(this.config.trackingItem);
+		RunsafeMeta item = event.getPlayer().getItemInHand();
+		return item != null && item.getItemType().getType() == LegacyMaterial.getById(trackingItem);
 	}
 
 	private boolean isPlayersWolf(Wolf wolf, IPlayer player)
@@ -89,6 +87,9 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent
 
 	private boolean allowedTrack(IPlayer player)
 	{
-		return this.permission.has(player, Permissions.canTrack);
+		return player.hasPermission("wolfhunt.canTrack");
 	}
+
+	private boolean babyWolvesCanTrack;
+	private int trackingItem;
 }
