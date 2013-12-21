@@ -75,7 +75,7 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConf
 
 	private boolean isTrackingWolf(Wolf wolf, IPlayer player)
 	{
-		return wolf.isTamed() && wolf.getOwner() == player;
+		return wolf.isTamed() && wolf.getOwner().getName().equals(player.getName());
 	}
 
 	private boolean allowedTrack(IPlayer player)
