@@ -58,7 +58,7 @@ public class Tracking implements IConfigurationChanged
 
 	private boolean canTrackPlayer(IPlayer tracker, IPlayer tracked)
 	{
-		if (tracker == tracked)
+		if (tracker.getName().equals(tracked.getName()))
 			return false;
 		else if (preventTrackingOps && tracked.isOP())
 			return false;
