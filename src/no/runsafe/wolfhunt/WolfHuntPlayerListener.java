@@ -52,7 +52,7 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConf
 		if (eventPlayer.isVanished())
 			return false;
 
-		Wolf wolf = (Wolf) target;
+		Wolf wolf = (Wolf) target.getRaw();
 
 		return this.isAdult(wolf) && this.isTrackingWolf(wolf, eventPlayer) && this.allowedTrack(eventPlayer);
 	}
