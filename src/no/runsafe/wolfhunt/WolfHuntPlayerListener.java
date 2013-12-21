@@ -8,7 +8,6 @@ import no.runsafe.framework.internal.LegacyMaterial;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Wolf;
 
@@ -44,10 +43,10 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConf
 		IPlayer eventPlayer = event.getPlayer();
 		RunsafeEntity target = event.getRightClicked();
 
-		if (!this.isHoldingTrackingItem(event))
+		if (this.isNotHoldingTrackingItem(event))
 			return false;
 
-		if (!this.isWolf(target))
+		if (this.isNotWolf(target))
 			return false;
 
 		if (eventPlayer.isVanished())
@@ -55,34 +54,28 @@ public class WolfHuntPlayerListener implements IPlayerInteractEntityEvent, IConf
 
 		Wolf wolf = (Wolf) target;
 
-		if (this.isBaby(wolf))
-			return false;
-
-		if (!this.isPlayersWolf(wolf, eventPlayer))
-			return false;
-
-		return this.allowedTrack(eventPlayer);
+		return this.isAdult(wolf) && this.isTrackingWolf(wolf, eventPlayer) && this.allowedTrack(eventPlayer);
 	}
 
-	private boolean isWolf(RunsafeEntity entity)
+	private boolean isNotWolf(RunsafeEntity entity)
 	{
-		return entity.getEntityType().getRaw() == EntityType.WOLF;
+		return entity.getEntityType().getRaw() != EntityType.WOLF;
 	}
 
-	private boolean isBaby(Wolf wolf)
+	private boolean isAdult(Wolf wolf)
 	{
-		return !babyWolvesCanTrack && wolf.getAge() < 0;
+		return babyWolvesCanTrack || wolf.getAge() >= 0;
 	}
 
-	private boolean isHoldingTrackingItem(RunsafePlayerInteractEntityEvent event)
+	private boolean isNotHoldingTrackingItem(RunsafePlayerInteractEntityEvent event)
 	{
 		RunsafeMeta item = event.getPlayer().getItemInHand();
-		return item != null && item.getItemType().getType() == LegacyMaterial.getById(trackingItem);
+		return item == null || item.getItemType().getType() != LegacyMaterial.getById(trackingItem);
 	}
 
-	private boolean isPlayersWolf(Wolf wolf, IPlayer player)
+	private boolean isTrackingWolf(Wolf wolf, IPlayer player)
 	{
-		return wolf.isTamed() && wolf.getOwner() == (AnimalTamer) player;
+		return wolf.isTamed() && wolf.getOwner() == player;
 	}
 
 	private boolean allowedTrack(IPlayer player)

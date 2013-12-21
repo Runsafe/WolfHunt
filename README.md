@@ -5,8 +5,7 @@ WolfHunt is a Minecraft CraftBukkit plug-in designed by the staff at minecraft.r
 
 This plug-in is intended for use in a survival environment where PvP is enabled.
 
-### Current Version: 1.1 R1
-### CraftBukkit Version: 1.2.2-R0.1-20120301.180527-8
+### Current Version: 2.0 R1
 
 Permissions
 -----------
@@ -16,13 +15,6 @@ Permissions
 * wolfhunt.commandGetConfig - Allows the player to get config values for WolfHunt
 * wolfhunt.commandSetConfig - Allows the player to set the config values for WolfHunt
 
-Commands
---------
-
-* /wolfhunt spawnwolf - Spawns an untamed wolf. [Permission: wolfhunt.commandSpawnWolf]
-* /wolfhunt getconfig [key] - Returns the config value of the specified key. [Permission: wolfhunt.commandGetConfig]
-* /wolfhunt setconfig [key] [value] - Sets the config value of the specified key. [Permission: wolfhunt.commandSetConfig]
-
 Configuration
 -------------
 
@@ -31,10 +23,8 @@ Configuration
 * trackingItem - [Default: 287] - The item used to track players when right clicked on an owned wolf.
 * trackingRadius - [Default: 200] - If a player is within this radius the wolf will simply growl to alert the player instead of giving a direction.
 * babyWolvesCanTrack - [Default: false] - If true, baby wolves can be used to track other players.
-* enableVanishNoPacketSupport - [Default: false] - If true, the plugin will ignore players VanishNoPacket declares vanished.
 
 Building from source
 ------------------
 
-* References CraftBukkit (Version: 1.2.2-R0.1-20120301.180527-8) [http://dl.bukkit.org/downloads/craftbukkit/]
-* References VanishNoPacket (Version: 3.5) [http://dev.bukkit.org/server-mods/vanish/]
+* Builds under the runsafe framework [http://jenkins.runsafe.no/]
