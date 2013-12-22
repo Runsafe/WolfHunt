@@ -13,9 +13,9 @@ import java.util.Iterator;
 
 public class Tracking implements IConfigurationChanged
 {
-	public Tracking(ILocalizer localizer)
+	public Tracking(ILocalizer translator)
 	{
-		this.tr = localizer;
+		this.tr = translator;
 	}
 
 	@Override
