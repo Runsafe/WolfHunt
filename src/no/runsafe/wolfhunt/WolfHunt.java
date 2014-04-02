@@ -12,7 +12,7 @@ public class WolfHunt extends RunsafeConfigurablePlugin
 		addComponent(Events.class);
 
 		// Plugin components
-		addComponent(Tracking.class);
-		addComponent(WolfHuntPlayerListener.class);
+		addComponent(Config.class);
+		addComponent(TrackingEngine.class);
 	}
 }

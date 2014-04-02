@@ -1,5 +1,2 @@
-trackingItem: 287
+trackingItem: string
 trackingRadius: 200
-allowOpOverride: true
-preventTrackingOps: true
-babyWolvesCanTrack: false
