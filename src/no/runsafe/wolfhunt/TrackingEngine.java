@@ -1,8 +1,8 @@
 package no.runsafe.wolfhunt;
 
 import net.minecraft.server.v1_7_R2.EntityWolf;
+import net.minecraft.server.v1_7_R2.PathEntity;
 import no.runsafe.framework.api.ILocation;
-import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
@@ -11,11 +11,10 @@ import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.tools.nms.EntityRegister;
 
 import java.util.List;
 
-public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
+public class TrackingEngine implements IPlayerInteractEntityEvent
 {
 	public TrackingEngine(Config config)
 	{
@@ -43,6 +42,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 					if (!worldPlayers.isEmpty())
 					{
 						double closestPlayerDist = 0;
+						ILocation closetPlayerLoc = null;
 						IPlayer closestPlayer = null;
 
 						for (IPlayer worldPlayer : worldPlayers)
@@ -58,6 +58,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 								{
 									closestPlayer = worldPlayer;
 									closestPlayerDist = distance;
+									closetPlayerLoc = worldPlayerLocation;
 								}
 							}
 						}
@@ -66,8 +67,9 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 						{
 							// Make the wolf growl and begin the tracking
 							wolfLocation.playSound(Sound.Creature.Wolf.Growl, 1, 1);
-							wolf.setTarget(ObjectUnwrapper.getMinecraft(closestPlayer));
 							wolf.setSitting(false);
+							PathEntity path = wolf.world.a(wolf, closetPlayerLoc.getBlockX(),  closetPlayerLoc.getBlockY(), closetPlayerLoc.getBlockZ(), 16.0f, true, false, false, true);
+							wolf.setPathEntity(path);
 						}
 						else
 						{
@@ -84,12 +86,6 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 				}
 			}
 		}
-	}
-
-	@Override
-	public void OnServerReady()
-	{
-		EntityRegister.registerOverrideEntity(TrackingWolf.class, "Wolf", 95);
 	}
 
 	private boolean isHoldingTrackingItem(IPlayer player)
