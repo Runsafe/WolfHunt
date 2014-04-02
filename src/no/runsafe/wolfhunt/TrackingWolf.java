@@ -23,6 +23,7 @@ public class TrackingWolf extends EntityWolf
 			e.printStackTrace();
 		}
 
+		this.goalSelector.a(1, new PathfinderGoalMoveTowardsTarget(this, 0.9D, 32.0F));
 		this.goalSelector.a(1, new PathfinderGoalFloat(this));
 		this.goalSelector.a(2, this.bp);
 		this.goalSelector.a(3, new PathfinderGoalLeapAtTarget(this, 0.4F));

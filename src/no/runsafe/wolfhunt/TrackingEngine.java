@@ -66,6 +66,8 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 						{
 							// Make the wolf growl and begin the tracking
 							wolfLocation.playSound(Sound.Creature.Wolf.Growl, 1, 1);
+							wolf.setTarget(ObjectUnwrapper.getMinecraft(closestPlayer));
+							wolf.setSitting(false);
 						}
 						else
 						{
