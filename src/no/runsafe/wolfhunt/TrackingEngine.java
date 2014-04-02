@@ -2,6 +2,7 @@ package no.runsafe.wolfhunt;
 
 import net.minecraft.server.v1_7_R2.EntityWolf;
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
@@ -10,10 +11,11 @@ import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.tools.nms.EntityRegister;
 
 import java.util.List;
 
-public class TrackingEngine implements IPlayerInteractEntityEvent
+public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 {
 	public TrackingEngine(Config config)
 	{
@@ -64,7 +66,6 @@ public class TrackingEngine implements IPlayerInteractEntityEvent
 						{
 							// Make the wolf growl and begin the tracking
 							wolfLocation.playSound(Sound.Creature.Wolf.Growl, 1, 1);
-							wolf.setTarget(ObjectUnwrapper.getMinecraft(closestPlayer));
 						}
 						else
 						{
@@ -80,6 +81,12 @@ public class TrackingEngine implements IPlayerInteractEntityEvent
 				}
 			}
 		}
+	}
+
+	@Override
+	public void OnServerReady()
+	{
+		EntityRegister.registerOverrideEntity(TrackingWolf.class, "Wolf", 95);
 	}
 
 	private boolean isHoldingTrackingItem(IPlayer player)
