@@ -78,6 +78,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IServerReady
 						// No players at all. Not sure how this even happens. Just bark.
 						wolfLocation.playSound(Sound.Creature.Wolf.Bark, 1, 1);
 					}
+					event.cancel();
 				}
 			}
 		}
