@@ -127,7 +127,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		IWorld world = player.getWorld();
 		ILocation location = player.getLocation();
 
-		if (world != null && location != null)
+		if (world != null && location != null && world.isUniverse("survival"))
 		{
 			RunsafeMeta vial = Item.Brewing.Potion.getItem();
 			vial.setDurability((short) 8261);
