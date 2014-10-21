@@ -131,8 +131,8 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		{
 			RunsafeMeta vial = Item.Brewing.Potion.getItem();
 			vial.setDurability((short) 8261);
-			vial.setDisplayName("&3Vial of Blood");
-			vial.addLore("&7" + player.getName());
+			vial.setDisplayName("§3Vial of Blood");
+			vial.addLore("§7" + player.getName());
 
 			world.dropItem(location, vial);
 		}
