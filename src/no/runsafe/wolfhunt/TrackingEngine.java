@@ -3,9 +3,11 @@ package no.runsafe.wolfhunt;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.extension.player.RunsafePlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
@@ -130,6 +132,10 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	public void OnPlayerDeathEvent(RunsafePlayerDeathEvent event)
 	{
 		IPlayer player = event.getEntity();
+
+		IEntity killer = player.getKiller();
+		if (killer == null || !(killer instanceof RunsafePlayer))
+			return;
 
 		IWorld world = player.getWorld();
 		ILocation location = player.getLocation();
