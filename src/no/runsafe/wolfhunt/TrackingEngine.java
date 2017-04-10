@@ -67,7 +67,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			north_south = 1;
 
 		if (east_west == -1 && north_south == -1)
-			return "&2The wolf snarls and growls. It's target is near!";
+			return "&2The wolf snarls and growls. Its target is near!";
 
 		String direction = "skyward";
 
