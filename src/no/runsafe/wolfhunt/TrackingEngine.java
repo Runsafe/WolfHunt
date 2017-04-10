@@ -83,47 +83,47 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		RunsafeEntity entity = event.getRightClicked();
 
 		// Make sure we are right-clicking on a wolf.
-		if (entity.getEntityType() == LivingEntity.Wolf)
+		if (entity.getEntityType() != LivingEntity.Wolf)
+			return;
+
+		IWorld world = entity.getWorld();
+		if (world == null)
+			return;
+
+		IPlayer player = event.getPlayer();
+		RunsafeWolf wolf = (RunsafeWolf) world.getEntityById(entity.getEntityId());
+
+		if (wolf == null)
+			return;
+
+		// Check the player owns the wolf.
+		if (!wolf.getOwner().getName().equalsIgnoreCase(player.getName()))
+			return;
+
+		RunsafeMeta item = player.getItemInHand();
+
+		// Check the player is holding a potion.
+		if (!(item != null && item.is(Item.Brewing.Potion)))
+			return;
+
+		String displayName = item.getDisplayName();
+
+		// Make sure the potion is a vial of blood.
+		if (!(displayName != null && displayName.equals("§3Vial of Blood")))
+			return;
+
+		List<String> lore = item.getLore();
+		if (lore == null)
+			return;
+
+		for (String loreString : lore)
 		{
-			IWorld world = entity.getWorld();
-			if (world == null)
-				return;
-
-			IPlayer player = event.getPlayer();
-			RunsafeWolf wolf = (RunsafeWolf) world.getEntityById(entity.getEntityId());
-
-			if (wolf == null)
-				return;
-
-			// Check the player owns the wolf.
-			if (wolf.getOwner().getName().equalsIgnoreCase(player.getName()))
+			if (loreString.startsWith("§7Track: "))
 			{
-				RunsafeMeta item = player.getItemInHand();
-
-				// Check the player is holding a potion.
-				if (item != null && item.is(Item.Brewing.Potion))
-				{
-					String displayName = item.getDisplayName();
-
-					// Make sure the potion is a vial of blood.
-					if (displayName != null && displayName.equals("§3Vial of Blood"))
-					{
-						List<String> lore = item.getLore();
-						if (lore == null)
-							return;
-
-						for (String loreString : lore)
-						{
-							if (loreString.startsWith("§7Track: "))
-							{
-								String[] parts = loreString.split(" ");
-								player.removeExactItem(item, 1); // Remove one vial.
-								player.sendColouredMessage(trackPlayer(player, parts[1])); // Run the track
-								return;
-							}
-						}
-					}
-				}
+				String[] parts = loreString.split(" ");
+				player.removeExactItem(item, 1); // Remove one vial.
+				player.sendColouredMessage(trackPlayer(player, parts[1])); // Run the track
+				return;
 			}
 		}
 	}
