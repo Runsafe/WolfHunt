@@ -110,13 +110,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		RunsafeMeta item = player.getItemInHand();
 
 		// Check the player is holding a potion.
-		if (!(item != null && item.is(Item.Brewing.Potion)))
+		if (item == null || !item.is(Item.Brewing.Potion))
 			return;
 
 		String displayName = item.getDisplayName();
 
 		// Make sure the potion is a vial of blood.
-		if (!(displayName != null && displayName.equals("§3Vial of Blood")))
+		if (displayName == null || !displayName.equals("§3Vial of Blood"))
 			return;
 
 		List<String> lore = item.getLore();
