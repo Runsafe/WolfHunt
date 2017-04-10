@@ -71,8 +71,15 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 		String direction = "skyward";
 
-		if (east_west == 1) direction = "east"; else if (east_west == 2) direction = "west";
-		if (north_south == 1) direction = "north-" + direction; else if (north_south == 2) direction = "south-" + direction;
+		if (east_west == 1)
+			direction = "east";
+		else if (east_west == 2)
+			direction = "west";
+
+		if (north_south == 1)
+			direction = "north-" + direction;
+		else if (north_south == 2)
+			direction = "south-" + direction;
 
 		return "&2The wolf howls in a " + direction + " direction";
 	}
