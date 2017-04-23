@@ -8,6 +8,7 @@ import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.extension.player.RunsafePlayer;
+import no.runsafe.framework.internal.wrapper.ObjectWrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
@@ -97,14 +98,18 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		if (world == null)
 			return;
 
+		// Make sure we are right-clicking on a wolf.
+		if (entity.getEntityType() != LivingEntity.Wolf)
+			return;
+
+		RunsafeWolf wolf = (RunsafeWolf) ObjectWrapper.convert(entity.getRaw());
 		IPlayer player = event.getPlayer();
-		RunsafeWolf wolf = (RunsafeWolf) world.getEntityById(entity.getEntityId());
 
 		if (wolf == null || !wolf.isTamed())
 			return;
 
 		// Check the player owns the wolf.
-		if (!wolf.getOwner().getName().equalsIgnoreCase(player.getName()))
+		if (!wolf.getOwner().equals(player))
 			return;
 
 		RunsafeMeta item = player.getItemInHand();
