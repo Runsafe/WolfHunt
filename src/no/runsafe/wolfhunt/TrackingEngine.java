@@ -100,7 +100,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		IPlayer player = event.getPlayer();
 		RunsafeWolf wolf = (RunsafeWolf) world.getEntityById(entity.getEntityId());
 
-		if (wolf == null)
+		if (wolf == null || !wolf.isTamed())
 			return;
 
 		// Check the player owns the wolf.
