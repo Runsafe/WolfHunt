@@ -18,6 +18,7 @@ import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEv
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathEvent
 {
@@ -27,22 +28,21 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		this.server = server;
 	}
 
-	private String trackPlayer(IPlayer tracker, String playerName)
+	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer)
 	{
-		IPlayer player = server.getPlayerExact(playerName);
-		if (player == null)
+		if (trackedPlayer == null)
 			return "&cThe wolf drinks the blood and looks around confused.";
 
-		if (!player.isOnline())
+		if (!trackedPlayer.isOnline())
 			return "&cThe wolf drinks the blood but seems to do nothing.";
 
-		IWorld playerWorld = player.getWorld();
-		IWorld trackerWorld = player.getWorld();
+		IWorld playerWorld = trackedPlayer.getWorld();
+		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
 			return "&cThe wolf drinks the blood and looks to the sky.";
 
-		ILocation playerLocation = player.getLocation();
+		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
@@ -130,11 +130,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 		for (String loreString : lore)
 		{
+			//Check if bottle is one of the newer ones that stores the player's UUID.
+			if (loreString.startsWith("§0 "))
+			{
+				String[] parts = loreString.split(" "); // Get the player data
+				IPlayer trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
+				player.removeExactItem(item, 1); // Remove one vial.
+				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+				return;
+			}
+			//Check if the bottle only stores the player's username.
 			if (loreString.startsWith("§7Track: "))
 			{
-				String[] parts = loreString.split(" ");
+				String[] parts = loreString.split(" ");//Get the player data
+				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
 				player.removeExactItem(item, 1); // Remove one vial.
-				player.sendColouredMessage(trackPlayer(player, parts[1])); // Run the track
+				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;
 			}
 		}
@@ -157,7 +168,8 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			RunsafeMeta vial = Item.Brewing.Potion.getItem();
 			vial.setDurability((short) 8261);
 			vial.setDisplayName("§3Vial of Blood");
-			vial.addLore("§7Track: " + player.getName());
+			vial.addLore("§0 " + player.getUniqueId());
+			vial.addLore("§CTrack: " + player.getName());
 
 			world.dropItem(location, vial);
 		}
