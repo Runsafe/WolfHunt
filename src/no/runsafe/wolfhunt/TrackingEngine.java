@@ -130,7 +130,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 		for (String loreString : lore)
 		{
-			//Check if bottle is one of the newer ones that stores the player's UUID.
+			// Check if bottle is one of the newer ones that stores the player's UUID.
 			if (loreString.startsWith("§0 "))
 			{
 				String[] parts = loreString.split(" "); // Get the player data
@@ -139,10 +139,10 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;
 			}
-			//Check if the bottle only stores the player's username.
+			// Check if the bottle only stores the player's username.
 			if (loreString.startsWith("§7Track: "))
 			{
-				String[] parts = loreString.split(" ");//Get the player data
+				String[] parts = loreString.split(" "); // Get the player data
 				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
 				player.removeExactItem(item, 1); // Remove one vial.
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
