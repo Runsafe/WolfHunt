@@ -4,15 +4,11 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.animals.IWolf;
 import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.internal.extension.player.RunsafePlayer;
-import no.runsafe.framework.internal.wrapper.ObjectWrapper;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.entity.LivingEntity;
-import no.runsafe.framework.minecraft.entity.RunsafeEntity;
-import no.runsafe.framework.minecraft.entity.animals.RunsafeWolf;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
@@ -88,24 +84,16 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	@Override
 	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
 	{
-		RunsafeEntity entity = event.getRightClicked();
+		IEntity entity = event.getRightClicked();
 
 		// Make sure we are right-clicking on a wolf.
-		if (entity.getEntityType() != LivingEntity.Wolf)
+		if (!(entity instanceof IWolf))
 			return;
 
-		IWorld world = entity.getWorld();
-		if (world == null)
-			return;
-
-		// Make sure we are right-clicking on a wolf.
-		if (entity.getEntityType() != LivingEntity.Wolf)
-			return;
-
-		RunsafeWolf wolf = (RunsafeWolf) ObjectWrapper.convert(entity.getRaw());
+		IWolf wolf = (IWolf) entity;
 		IPlayer player = event.getPlayer();
 
-		if (wolf == null || !wolf.isTamed())
+		if (!wolf.isTamed())
 			return;
 
 		// Check the player owns the wolf.
@@ -156,8 +144,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	{
 		IPlayer player = event.getEntity();
 
-		IEntity killer = player.getKiller();
-		if (!(killer instanceof RunsafePlayer))
+		if (player.getKiller() == null)
 			return;
 
 		IWorld world = player.getWorld();
