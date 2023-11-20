@@ -112,7 +112,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		if (!wolf.getOwner().equals(player))
 			return;
 
-		RunsafeMeta item = player.getItemInHand();
+		RunsafeMeta item = player.getItemInMainHand();
 
 		// Check the player is holding a potion.
 		if (item == null || !item.is(Item.Brewing.Potion))
@@ -157,7 +157,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		IPlayer player = event.getEntity();
 
 		IEntity killer = player.getKiller();
-		if (killer == null || !(killer instanceof RunsafePlayer))
+		if (!(killer instanceof RunsafePlayer))
 			return;
 
 		IWorld world = player.getWorld();
