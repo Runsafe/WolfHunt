@@ -3,6 +3,10 @@ minimumDroppedBlood: 1
 maximumDroppedBlood: 1
 chanceOfBloodBeingUsedUp: 100
 trackingUniverse: survival
+easterEggPlayers:
+- DOG
+- docpify
+- console
 message:
   nullTrackedPlayer: '&cThey look around confused.'
   offlineTrackedPlayer: '&cThey seem to do nothing.'

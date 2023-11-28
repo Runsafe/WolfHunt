@@ -2,6 +2,10 @@ package no.runsafe.wolfhunt;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config implements IConfigurationChanged
 {
@@ -24,6 +28,9 @@ public class Config implements IConfigurationChanged
 		maximumDroppedBlood = configuration.getConfigValueAsInt("maximumAdditionalDroppedBlood");
 		chanceOfBloodBeingUsedUp = configuration.getConfigValueAsFloat("chanceOfBloodBeingUsedUp");
 		trackingUniverse = configuration.getConfigValueAsString("trackingUniverse");
+
+		easterEggPlayers.clear();
+		easterEggPlayers.addAll(configuration.getConfigValueAsList("easterEggPlayers"));
 	}
 
 	public String getNullTrackedPlayerMessage()
@@ -101,6 +108,14 @@ public class Config implements IConfigurationChanged
 		return trackingUniverse;
 	}
 
+	public boolean isEasterEggPlayer(IPlayer player)
+	{
+		if (player == null)
+			return false;
+
+		return easterEggPlayers.contains(player.getName());
+	}
+
 	private String nullTrackedPlayerMessage;
 	private String offlineTrackedPlayerMessage;
 	private String trackedPlayerInWrongWorldMessage;
@@ -117,4 +132,5 @@ public class Config implements IConfigurationChanged
 	private int maximumDroppedBlood;
 	private float chanceOfBloodBeingUsedUp;
 	private String trackingUniverse;
+	private List<String> easterEggPlayers = new ArrayList<>(0);
 }

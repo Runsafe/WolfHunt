@@ -8,6 +8,7 @@ import no.runsafe.framework.api.entity.animals.IWolf;
 import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.minecraft.Buff;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
@@ -124,6 +125,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			{
 				String[] parts = loreString.split(" "); // Get the player data
 				IPlayer trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
+				if (config.isEasterEggPlayer(trackedPlayer))
+				{
+					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+					player.removeExactItem(item, 1); // Remove one vial.
+					runEasterEgg(player);
+					return;
+				}
 
 				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
 				{
@@ -140,6 +148,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			{
 				String[] parts = loreString.split(" "); // Get the player data
 				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
+				if (config.isEasterEggPlayer(trackedPlayer))
+				{
+					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+					player.removeExactItem(item, 1); // Remove one vial.
+					runEasterEgg(player);
+					return;
+				}
 
 				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
 				{
@@ -152,6 +167,18 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 				return;
 			}
 		}
+	}
+
+	private void runEasterEgg(IPlayer victum)
+	{
+		victum.sendColouredMessage(config.getEasterEggMessage());
+
+		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
+		victum.addBuff(Buff.Combat.Blindness);
+		victum.addBuff(Buff.Disease.Hunger);
+		victum.addBuff(Buff.Utility.Unluck);
+		victum.addBuff(Buff.Utility.Movement.DecreaseSpeed);
+		victum.addBuff(Buff.Combat.Damage.Wither);
 	}
 
 	@Override
