@@ -121,51 +121,34 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		for (String loreString : lore)
 		{
 			// Check if bottle is one of the newer ones that stores the player's UUID.
+			String[] parts = loreString.split(" "); // Get the player data
+			IPlayer trackedPlayer;
+
+			// Grab player information if exists.
 			if (loreString.startsWith("§0 "))
-			{
-				String[] parts = loreString.split(" "); // Get the player data
-				IPlayer trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
-				if (config.isEasterEggPlayer(trackedPlayer))
-				{
-					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
-					player.removeExactItem(item, 1); // Remove one vial.
-					runEasterEgg(player);
-					return;
-				}
-
-				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
-				{
-					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
-					player.removeExactItem(item, 1); // Remove one vial.
-				}
-				else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
-
-				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
-				return;
-			}
+				trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
 			// Check if the bottle only stores the player's username.
-			if (loreString.startsWith("§7Track: "))
+			else if (loreString.startsWith("§7Track: "))
+				trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
+			else continue;
+
+			if (config.isEasterEggPlayer(trackedPlayer))
 			{
-				String[] parts = loreString.split(" "); // Get the player data
-				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
-				if (config.isEasterEggPlayer(trackedPlayer))
-				{
-					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
-					player.removeExactItem(item, 1); // Remove one vial.
-					runEasterEgg(player);
-					return;
-				}
-
-				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
-				{
-					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
-					player.removeExactItem(item, 1); // Remove one vial.
-				}
-				else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
-
-				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+				player.removeExactItem(item, 1); // Remove one vial.
+				runEasterEgg(player);
 				return;
 			}
+
+			if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
+			{
+				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+				player.removeExactItem(item, 1); // Remove one vial.
+			}
+			else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
+
+			player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+			return;
 		}
 	}
 
@@ -192,22 +175,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		IWorld world = player.getWorld();
 		ILocation location = player.getLocation();
 
-		if (world != null && location != null && world.isUniverse(config.getTrackingUniverse()))
-		{
-			int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
-				+ config.getMinimumDroppedBlood();
-			if (amount < 1)
-				return;
+		if (world == null || location == null || !world.isUniverse(config.getTrackingUniverse()))
+			return;
 
-			RunsafeMeta vial = Item.Brewing.Potion.getItem();
-			vial.setAmount(amount);
-			vial.setDurability((short) 8261);
-			vial.setDisplayName("§3Vial of Blood");
-			vial.addLore("§0 " + player.getUniqueId());
-			vial.addLore("§CTrack: " + player.getName());
+		int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
+			+ config.getMinimumDroppedBlood();
+		if (amount < 1)
+			return;
 
-			world.dropItem(location, vial);
-		}
+		RunsafeMeta vial = Item.Brewing.Potion.getItem();
+		vial.setAmount(amount);
+		vial.setDurability((short) 8261);
+		vial.setDisplayName("§3Vial of Blood");
+		vial.addLore("§0 " + player.getUniqueId());
+		vial.addLore("§CTrack: " + player.getName());
+
+		world.dropItem(location, vial);
 	}
 
 	private final Config config;
