@@ -3,3 +3,6 @@ main: no.runsafe.wolfhunt.WolfHunt
 version: 2.0.@BUILD@
 authors: [Kruithne, mortenn]
 description: Allows players to hunt each other with Wolves.
+commands:
+  blood:
+    description: Gets a player's blood

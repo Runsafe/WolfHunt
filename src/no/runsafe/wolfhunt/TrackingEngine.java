@@ -4,20 +4,18 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.animals.IWolf;
 import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.internal.extension.player.RunsafePlayer;
-import no.runsafe.framework.internal.wrapper.ObjectWrapper;
+import no.runsafe.framework.minecraft.Buff;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.entity.LivingEntity;
-import no.runsafe.framework.minecraft.entity.RunsafeEntity;
-import no.runsafe.framework.minecraft.entity.animals.RunsafeWolf;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathEvent
@@ -31,22 +29,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer)
 	{
 		if (trackedPlayer == null)
-			return "&cThe wolf drinks the blood and looks around confused.";
+			return config.getNullTrackedPlayerMessage();
 
 		if (!trackedPlayer.isOnline())
-			return "&cThe wolf drinks the blood but seems to do nothing.";
+			return config.getOfflineTrackedPlayerMessage();
 
 		IWorld playerWorld = trackedPlayer.getWorld();
 		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
-			return "&cThe wolf drinks the blood and looks to the sky.";
+			return config.getTrackedPlayerInWrongWorldMessage();
 
 		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
-			return "&cThe wolf drinks the blood and peers at you confused.";
+			return config.getNullLocationMessage();
 
 		short east_west = -1;
 		short north_south = -1;
@@ -68,7 +66,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			north_south = 1;
 
 		if (east_west == -1 && north_south == -1)
-			return "&2The wolf snarls and growls. Its target is near!";
+			return config.getTrackedPlayerNearMessage();
 
 		String direction = "skyward";
 
@@ -82,37 +80,29 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		else if (north_south == 2)
 			direction = "south-" + direction;
 
-		return "&2The wolf howls in a " + direction + " direction";
+		return String.format(config.getTrackedPlayerDirectionMessage(), direction);
 	}
 
 	@Override
 	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
 	{
-		RunsafeEntity entity = event.getRightClicked();
+		IEntity entity = event.getRightClicked();
 
 		// Make sure we are right-clicking on a wolf.
-		if (entity.getEntityType() != LivingEntity.Wolf)
+		if (!(entity instanceof IWolf))
 			return;
 
-		IWorld world = entity.getWorld();
-		if (world == null)
-			return;
-
-		// Make sure we are right-clicking on a wolf.
-		if (entity.getEntityType() != LivingEntity.Wolf)
-			return;
-
-		RunsafeWolf wolf = (RunsafeWolf) ObjectWrapper.convert(entity.getRaw());
+		IWolf wolf = (IWolf) entity;
 		IPlayer player = event.getPlayer();
 
-		if (wolf == null || !wolf.isTamed())
+		if (!wolf.isTamed())
 			return;
 
 		// Check the player owns the wolf.
 		if (!wolf.getOwner().equals(player))
 			return;
 
-		RunsafeMeta item = player.getItemInHand();
+		RunsafeMeta item = player.getItemInMainHand();
 
 		// Check the player is holding a potion.
 		if (item == null || !item.is(Item.Brewing.Potion))
@@ -131,24 +121,47 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		for (String loreString : lore)
 		{
 			// Check if bottle is one of the newer ones that stores the player's UUID.
+			String[] parts = loreString.split(" "); // Get the player data
+			IPlayer trackedPlayer;
+
+			// Grab player information if exists.
 			if (loreString.startsWith("§0 "))
-			{
-				String[] parts = loreString.split(" "); // Get the player data
-				IPlayer trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
-				player.removeExactItem(item, 1); // Remove one vial.
-				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
-				return;
-			}
+				trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
 			// Check if the bottle only stores the player's username.
-			if (loreString.startsWith("§7Track: "))
+			else if (loreString.startsWith("§7Track: "))
+				trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
+			else continue;
+
+			if (config.isEasterEggPlayer(trackedPlayer))
 			{
-				String[] parts = loreString.split(" "); // Get the player data
-				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
+				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
 				player.removeExactItem(item, 1); // Remove one vial.
-				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+				runEasterEgg(player);
 				return;
 			}
+
+			if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
+			{
+				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+				player.removeExactItem(item, 1); // Remove one vial.
+			}
+			else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
+
+			player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+			return;
 		}
+	}
+
+	private void runEasterEgg(IPlayer victum)
+	{
+		victum.sendColouredMessage(config.getEasterEggMessage());
+
+		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
+		victum.addBuff(Buff.Combat.Blindness);
+		victum.addBuff(Buff.Disease.Hunger);
+		victum.addBuff(Buff.Utility.Unluck);
+		victum.addBuff(Buff.Utility.Movement.DecreaseSpeed);
+		victum.addBuff(Buff.Combat.Damage.Wither);
 	}
 
 	@Override
@@ -156,25 +169,31 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	{
 		IPlayer player = event.getEntity();
 
-		IEntity killer = player.getKiller();
-		if (killer == null || !(killer instanceof RunsafePlayer))
+		if (player.getKiller() == null)
 			return;
 
 		IWorld world = player.getWorld();
 		ILocation location = player.getLocation();
 
-		if (world != null && location != null && world.isUniverse("survival"))
-		{
-			RunsafeMeta vial = Item.Brewing.Potion.getItem();
-			vial.setDurability((short) 8261);
-			vial.setDisplayName("§3Vial of Blood");
-			vial.addLore("§0 " + player.getUniqueId());
-			vial.addLore("§CTrack: " + player.getName());
+		if (world == null || location == null || !world.isUniverse(config.getTrackingUniverse()))
+			return;
 
-			world.dropItem(location, vial);
-		}
+		int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
+			+ config.getMinimumDroppedBlood();
+		if (amount < 1)
+			return;
+
+		RunsafeMeta vial = Item.Brewing.Potion.getItem();
+		vial.setAmount(amount);
+		vial.setDurability((short) 8261);
+		vial.setDisplayName("§3Vial of Blood");
+		vial.addLore("§0 " + player.getUniqueId());
+		vial.addLore("§CTrack: " + player.getName());
+
+		world.dropItem(location, vial);
 	}
 
 	private final Config config;
 	private final IServer server;
+	private static final Random random = new Random();
 }
