@@ -17,6 +17,7 @@ public class Config implements IConfigurationChanged
 		wolfDrinksBloodMessage = configuration.getConfigValueAsString("message.wolfDrinksBlood");
 		wolfSniffsBloodMessage = configuration.getConfigValueAsString("message.wolfSniffsBlood");
 		easterEggMessage = configuration.getConfigValueAsString("message.easterEgg");
+		commandBloodObtainedMessage = configuration.getConfigValueAsString("message.commandBloodObtained");
 
 		trackingRadius = configuration.getConfigValueAsInt("trackingRadius");
 		minimumDroppedBlood = configuration.getConfigValueAsInt("minimumDroppedBlood");
@@ -70,6 +71,11 @@ public class Config implements IConfigurationChanged
 		return easterEggMessage;
 	}
 
+	public String getCommandBloodObtainedMessage()
+	{
+		return commandBloodObtainedMessage;
+	}
+
 	public int getTrackingRadius()
 	{
 		return trackingRadius;
@@ -104,6 +110,7 @@ public class Config implements IConfigurationChanged
 	private String wolfDrinksBloodMessage;
 	private String wolfSniffsBloodMessage;
 	private String easterEggMessage;
+	private String commandBloodObtainedMessage;
 
 	private int trackingRadius;
 	private int minimumDroppedBlood;

@@ -13,3 +13,4 @@ message:
   wolfDrinksBlood: '&cThe wolf drinks the blood.'
   wolfSniffsBlood: '&aThe wolf sniffs the blood.'
   easterEgg: '&4You have unleashed the power stored in the vial. Whatever you were trying to track is now after you instead.'
+  commandBloodObtained: '&aYou have obtained %s &ablood.'
