@@ -22,6 +22,7 @@ public class Config implements IConfigurationChanged
 		minimumDroppedBlood = configuration.getConfigValueAsInt("minimumDroppedBlood");
 		maximumDroppedBlood = configuration.getConfigValueAsInt("maximumAdditionalDroppedBlood");
 		chanceOfBloodBeingUsedUp = configuration.getConfigValueAsFloat("chanceOfBloodBeingUsedUp");
+		trackingUniverse = configuration.getConfigValueAsString("trackingUniverse");
 	}
 
 	public String getNullTrackedPlayerMessage()
@@ -89,6 +90,11 @@ public class Config implements IConfigurationChanged
 		return chanceOfBloodBeingUsedUp;
 	}
 
+	public String getTrackingUniverse()
+	{
+		return trackingUniverse;
+	}
+
 	private String nullTrackedPlayerMessage;
 	private String offlineTrackedPlayerMessage;
 	private String trackedPlayerInWrongWorldMessage;
@@ -103,4 +109,5 @@ public class Config implements IConfigurationChanged
 	private int minimumDroppedBlood;
 	private int maximumDroppedBlood;
 	private float chanceOfBloodBeingUsedUp;
+	private String trackingUniverse;
 }
