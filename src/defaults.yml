@@ -1,1 +1,4 @@
 trackingRadius: 200
+minimumDroppedBlood: 1
+maximumDroppedBlood: 1
+chanceOfBloodBeingUsedUp: 100

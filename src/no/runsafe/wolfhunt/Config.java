@@ -9,6 +9,9 @@ public class Config implements IConfigurationChanged
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		trackingRadius = configuration.getConfigValueAsInt("trackingRadius");
+		minimumDroppedBlood = configuration.getConfigValueAsInt("minimumDroppedBlood");
+		maximumDroppedBlood = configuration.getConfigValueAsInt("maximumAdditionalDroppedBlood");
+		chanceOfBloodBeingUsedUp = configuration.getConfigValueAsFloat("chanceOfBloodBeingUsedUp");
 	}
 
 	public int getTrackingRadius()
@@ -16,5 +19,23 @@ public class Config implements IConfigurationChanged
 		return trackingRadius;
 	}
 
+	public int getMinimumDroppedBlood()
+	{
+		return minimumDroppedBlood;
+	}
+
+	public int getMaximumDroppedBlood()
+	{
+		return maximumDroppedBlood;
+	}
+
+	public float getChanceOfBloodBeingUsedUp()
+	{
+		return chanceOfBloodBeingUsedUp;
+	}
+
 	private int trackingRadius;
+	private int minimumDroppedBlood;
+	private int maximumDroppedBlood;
+	private float chanceOfBloodBeingUsedUp;
 }

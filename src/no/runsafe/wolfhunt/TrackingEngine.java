@@ -14,6 +14,7 @@ import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEv
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathEvent
@@ -27,22 +28,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer)
 	{
 		if (trackedPlayer == null)
-			return "&cThe wolf drinks the blood and looks around confused.";
+			return "&cThey look around confused.";
 
 		if (!trackedPlayer.isOnline())
-			return "&cThe wolf drinks the blood but seems to do nothing.";
+			return "&cThey seem to do nothing.";
 
 		IWorld playerWorld = trackedPlayer.getWorld();
 		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
-			return "&cThe wolf drinks the blood and looks to the sky.";
+			return "&cThey look to the sky.";
 
 		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
-			return "&cThe wolf drinks the blood and peers at you confused.";
+			return "&cThey peer at you confused.";
 
 		short east_west = -1;
 		short north_south = -1;
@@ -123,7 +124,14 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			{
 				String[] parts = loreString.split(" "); // Get the player data
 				IPlayer trackedPlayer = server.getPlayer(UUID.fromString(parts[1])); // Get the tracked player
-				player.removeExactItem(item, 1); // Remove one vial.
+
+				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
+				{
+					player.sendColouredMessage("&cThe wolf drinks the blood.");
+					player.removeExactItem(item, 1); // Remove one vial.
+				}
+				else player.sendColouredMessage("&aThe wolf sniffs the blood.");
+
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;
 			}
@@ -132,7 +140,14 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			{
 				String[] parts = loreString.split(" "); // Get the player data
 				IPlayer trackedPlayer = server.getPlayerExact(parts[1]); // Get the tracked player
-				player.removeExactItem(item, 1); // Remove one vial.
+
+				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
+				{
+					player.sendColouredMessage("&cThe wolf drinks the blood.");
+					player.removeExactItem(item, 1); // Remove one vial.
+				}
+				else player.sendColouredMessage("&aThe wolf sniffs the blood.");
+
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;
 			}
@@ -152,7 +167,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 		if (world != null && location != null && world.isUniverse("survival"))
 		{
+			int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
+				+ config.getMinimumDroppedBlood();
+			if (amount < 1)
+				return;
+
 			RunsafeMeta vial = Item.Brewing.Potion.getItem();
+			vial.setAmount(amount);
 			vial.setDurability((short) 8261);
 			vial.setDisplayName("§3Vial of Blood");
 			vial.addLore("§0 " + player.getUniqueId());
@@ -164,4 +185,5 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 	private final Config config;
 	private final IServer server;
+	private static final Random random = new Random();
 }
