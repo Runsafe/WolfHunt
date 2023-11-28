@@ -28,22 +28,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer)
 	{
 		if (trackedPlayer == null)
-			return "&cThey look around confused.";
+			return config.getNullTrackedPlayerMessage();
 
 		if (!trackedPlayer.isOnline())
-			return "&cThey seem to do nothing.";
+			return config.getOfflineTrackedPlayerMessage();
 
 		IWorld playerWorld = trackedPlayer.getWorld();
 		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
-			return "&cThey look to the sky.";
+			return config.getTrackedPlayerInWrongWorldMessage();
 
 		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
-			return "&cThey peer at you confused.";
+			return config.getNullLocationMessage();
 
 		short east_west = -1;
 		short north_south = -1;
@@ -65,7 +65,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			north_south = 1;
 
 		if (east_west == -1 && north_south == -1)
-			return "&2The wolf snarls and growls. Its target is near!";
+			return config.getTrackedPlayerNearMessage();
 
 		String direction = "skyward";
 
@@ -79,7 +79,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		else if (north_south == 2)
 			direction = "south-" + direction;
 
-		return "&2The wolf howls in a " + direction + " direction";
+		return String.format(config.getTrackedPlayerDirectionMessage(), direction);
 	}
 
 	@Override
@@ -127,10 +127,10 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
 				{
-					player.sendColouredMessage("&cThe wolf drinks the blood.");
+					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
 					player.removeExactItem(item, 1); // Remove one vial.
 				}
-				else player.sendColouredMessage("&aThe wolf sniffs the blood.");
+				else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
 
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;
@@ -143,10 +143,10 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 				if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
 				{
-					player.sendColouredMessage("&cThe wolf drinks the blood.");
+					player.sendColouredMessage(config.getWolfDrinksBloodMessage());
 					player.removeExactItem(item, 1); // Remove one vial.
 				}
-				else player.sendColouredMessage("&aThe wolf sniffs the blood.");
+				else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
 
 				player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
 				return;

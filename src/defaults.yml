@@ -2,3 +2,13 @@ trackingRadius: 200
 minimumDroppedBlood: 1
 maximumDroppedBlood: 1
 chanceOfBloodBeingUsedUp: 100
+message:
+  nullTrackedPlayer: '&cThey look around confused.'
+  offlineTrackedPlayer: '&cThey seem to do nothing.'
+  trackedPlayerInWrongWorld: '&cThey look to the sky.'
+  nullLocation: '&cThey peer at you confused.'
+  trackedPlayerNear: '&2The wolf snarls and growls. Its target is near!'
+  trackedPlayerDirection: '&2The wolf howls in a %s direction'
+  wolfDrinksBlood: '&cThe wolf drinks the blood.'
+  wolfSniffsBlood: '&aThe wolf sniffs the blood.'
+  easterEgg: '&4You have unleashed the power stored in the vial. Whatever you were trying to track is now after you instead.'
