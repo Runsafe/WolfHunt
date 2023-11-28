@@ -178,8 +178,11 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		if (world == null || location == null || !world.isUniverse(config.getTrackingUniverse()))
 			return;
 
-		int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
-			+ config.getMinimumDroppedBlood();
+		int amount = config.getMinimumDroppedBlood();
+		int bound = config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood();
+		if (bound > 0)
+			amount += random.nextInt(bound);
+
 		if (amount < 1)
 			return;
 
