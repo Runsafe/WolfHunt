@@ -157,11 +157,12 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		victum.sendColouredMessage(config.getEasterEggMessage());
 
 		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
-		victum.addBuff(Buff.Combat.Blindness);
-		victum.addBuff(Buff.Disease.Hunger);
-		victum.addBuff(Buff.Utility.Unluck);
-		victum.addBuff(Buff.Utility.Movement.DecreaseSpeed);
-		victum.addBuff(Buff.Combat.Damage.Wither);
+
+		victum.addBuff(Buff.Combat.Blindness.duration(15));
+		victum.addBuff(Buff.Disease.Hunger.duration(15));
+		victum.addBuff(Buff.Utility.Unluck.duration(99999));
+		victum.addBuff(Buff.Utility.Movement.DecreaseSpeed.duration(15));
+		victum.addBuff(Buff.Combat.Damage.Wither.duration(5));
 	}
 
 	@Override
@@ -178,8 +179,11 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		if (world == null || location == null || !world.isUniverse(config.getTrackingUniverse()))
 			return;
 
-		int amount = random.nextInt(config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood())
-			+ config.getMinimumDroppedBlood();
+		int amount = config.getMinimumDroppedBlood();
+		int bound = config.getMaximumDroppedBlood() - config.getMinimumDroppedBlood() + 1;
+		if (bound > 1)
+			amount += random.nextInt(bound);
+
 		if (amount < 1)
 			return;
 
