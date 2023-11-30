@@ -25,7 +25,7 @@ public class Config implements IConfigurationChanged
 
 		trackingRadius = configuration.getConfigValueAsInt("trackingRadius");
 		minimumDroppedBlood = configuration.getConfigValueAsInt("minimumDroppedBlood");
-		maximumDroppedBlood = configuration.getConfigValueAsInt("maximumAdditionalDroppedBlood");
+		maximumDroppedBlood = configuration.getConfigValueAsInt("maximumDroppedBlood");
 		chanceOfBloodBeingUsedUp = configuration.getConfigValueAsFloat("chanceOfBloodBeingUsedUp");
 		trackingUniverse = configuration.getConfigValueAsString("trackingUniverse");
 
