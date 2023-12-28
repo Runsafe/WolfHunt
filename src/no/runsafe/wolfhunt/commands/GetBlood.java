@@ -5,8 +5,10 @@ import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.Player;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.minecraft.Buff;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.item.meta.RunsafePotion;
 import no.runsafe.wolfhunt.Config;
 
 public class GetBlood extends PlayerCommand
@@ -27,7 +29,7 @@ public class GetBlood extends PlayerCommand
 		boolean uuidBottle = parameters.getRequired("1.8+");
 
 		RunsafeMeta vial = Item.Brewing.Potion.getItem();
-		vial.setDurability((short) 8261);
+		((RunsafePotion) vial).giveCustomEffect(Buff.Healing.Instant);
 		vial.setDisplayName("§3Vial of Blood");
 
 		if (uuidBottle)

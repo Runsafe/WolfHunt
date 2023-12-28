@@ -13,6 +13,7 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.item.meta.RunsafePotion;
 
 import java.util.List;
 import java.util.Random;
@@ -189,7 +190,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 		RunsafeMeta vial = Item.Brewing.Potion.getItem();
 		vial.setAmount(amount);
-		vial.setDurability((short) 8261);
+		((RunsafePotion) vial).giveCustomEffect(Buff.Healing.Instant);
 		vial.setDisplayName("§3Vial of Blood");
 		vial.addLore("§0 " + player.getUniqueId());
 		vial.addLore("§CTrack: " + player.getName());
