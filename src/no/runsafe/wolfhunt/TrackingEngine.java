@@ -189,13 +189,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			return;
 
 		RunsafeMeta vial = Item.Brewing.Potion.getItem();
-		vial.setAmount(amount);
 		((RunsafePotion) vial).giveCustomEffect(Buff.Healing.Instant);
 		vial.setDisplayName("§3Vial of Blood");
 		vial.addLore("§0 " + player.getUniqueId());
 		vial.addLore("§CTrack: " + player.getName());
 
-		world.dropItem(location, vial);
+		for (int i = 0; i < amount; i++)
+			world.dropItem(location, vial);
 	}
 
 	private final Config config;
