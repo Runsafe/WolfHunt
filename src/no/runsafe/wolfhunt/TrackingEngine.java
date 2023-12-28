@@ -30,22 +30,22 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer, RunsafeMeta vial)
 	{
 		if (trackedPlayer == null)
-			return config.getWolfSniffsBloodMessage() + "\n" + config.getNullTrackedPlayerMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getNullTrackedPlayer();
 
 		if (!trackedPlayer.isOnline())
-			return config.getWolfSniffsBloodMessage() + "\n" + config.getOfflineTrackedPlayerMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getOfflineTrackedPlayer();
 
 		IWorld playerWorld = trackedPlayer.getWorld();
 		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
-			return config.getWolfSniffsBloodMessage() + "\n" + config.getTrackedPlayerInWrongWorldMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getTrackedPlayerInWrongWorld();
 
 		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
-			return config.getWolfSniffsBloodMessage() + "\n" + config.getNullLocationMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getNullLocation();
 
 		short east_west = -1;
 		short north_south = -1;
@@ -67,7 +67,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			north_south = 1;
 
 		if (east_west == -1 && north_south == -1)
-			return config.getTrackedPlayerNearMessage();
+			return Config.Message.getTrackedPlayerNear();
 
 		String direction = "skyward";
 
@@ -81,13 +81,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		else if (north_south == 2)
 			direction = "south-" + direction;
 
-		String returnMessage = String.format(config.getTrackedPlayerDirectionMessage(), direction);
+		String returnMessage = String.format(Config.Message.getTrackedPlayerDirection(), direction);
 
 		if (!(random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100)))
-			return config.getWolfSniffsBloodMessage() + "\n" + returnMessage;
+			return Config.Message.getWolfSniffsBlood() + "\n" + returnMessage;
 
 		tracker.removeExactItem(vial, 1); // Remove one vial.
-		return config.getWolfDrinksBloodMessage() + "\n" + returnMessage;
+		return Config.Message.getWolfDrinksBlood() + "\n" + returnMessage;
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 			if (config.isEasterEggPlayer(trackedPlayer))
 			{
-				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+				player.sendColouredMessage(Config.Message.getWolfDrinksBlood());
 				player.removeExactItem(item, 1); // Remove one vial.
 				runEasterEgg(player);
 				return;
@@ -154,7 +154,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 	private void runEasterEgg(IPlayer victum)
 	{
-		victum.sendColouredMessage(config.getEasterEggMessage());
+		victum.sendColouredMessage(Config.Message.getEasterEgg());
 
 		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
 

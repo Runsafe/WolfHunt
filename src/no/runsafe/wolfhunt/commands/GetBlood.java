@@ -13,13 +13,12 @@ import no.runsafe.wolfhunt.Config;
 
 public class GetBlood extends PlayerCommand
 {
-	public GetBlood(Config config)
+	public GetBlood()
 	{
 		super(
 			"blood", "Gets a player's blood.", "runsafe.wolfhunt.blood",
 			new Player().require(), new BooleanArgument("1.8+").withDefault(true)
 		);
-		this.config = config;
 	}
 
 	@Override
@@ -41,8 +40,6 @@ public class GetBlood extends PlayerCommand
 
 		executor.give(vial);
 
-		return String.format(config.getCommandBloodObtainedMessage(), donor.getPrettyName());
+		return String.format(Config.Message.getCommandBloodObtained(), donor.getPrettyName());
 	}
-
-	private final Config config;
 }

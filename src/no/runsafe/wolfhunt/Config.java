@@ -12,16 +12,16 @@ public class Config implements IConfigurationChanged
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
-		nullTrackedPlayerMessage = configuration.getConfigValueAsString("message.nullTrackedPlayer");
-		offlineTrackedPlayerMessage = configuration.getConfigValueAsString("message.offlineTrackedPlayer");
-		trackedPlayerInWrongWorldMessage = configuration.getConfigValueAsString("message.trackedPlayerInWrongWorld");
-		nullLocationMessage = configuration.getConfigValueAsString("message.nullLocation");
-		trackedPlayerNearMessage = configuration.getConfigValueAsString("message.trackedPlayerNear");
-		trackedPlayerDirectionMessage = configuration.getConfigValueAsString("message.trackedPlayerDirection");
-		wolfDrinksBloodMessage = configuration.getConfigValueAsString("message.wolfDrinksBlood");
-		wolfSniffsBloodMessage = configuration.getConfigValueAsString("message.wolfSniffsBlood");
-		easterEggMessage = configuration.getConfigValueAsString("message.easterEgg");
-		commandBloodObtainedMessage = configuration.getConfigValueAsString("message.commandBloodObtained");
+		Message.nullTrackedPlayer = configuration.getConfigValueAsString("message.nullTrackedPlayer");
+		Message.offlineTrackedPlayer = configuration.getConfigValueAsString("message.offlineTrackedPlayer");
+		Message.trackedPlayerInWrongWorld = configuration.getConfigValueAsString("message.trackedPlayerInWrongWorld");
+		Message.nullLocation = configuration.getConfigValueAsString("message.nullLocation");
+		Message.trackedPlayerNear = configuration.getConfigValueAsString("message.trackedPlayerNear");
+		Message.trackedPlayerDirection = configuration.getConfigValueAsString("message.trackedPlayerDirection");
+		Message.wolfDrinksBlood = configuration.getConfigValueAsString("message.wolfDrinksBlood");
+		Message.wolfSniffsBlood = configuration.getConfigValueAsString("message.wolfSniffsBlood");
+		Message.easterEgg = configuration.getConfigValueAsString("message.easterEgg");
+		Message.commandBloodObtained = configuration.getConfigValueAsString("message.commandBloodObtained");
 
 		trackingRadius = configuration.getConfigValueAsInt("trackingRadius");
 		minimumDroppedBlood = configuration.getConfigValueAsInt("minimumDroppedBlood");
@@ -33,54 +33,68 @@ public class Config implements IConfigurationChanged
 		easterEggPlayers.addAll(configuration.getConfigValueAsList("easterEggPlayers"));
 	}
 
-	public String getNullTrackedPlayerMessage()
+	public static final class Message
 	{
-		return nullTrackedPlayerMessage;
-	}
+		public static String getNullTrackedPlayer()
+		{
+			return nullTrackedPlayer;
+		}
 
-	public String getOfflineTrackedPlayerMessage()
-	{
-		return offlineTrackedPlayerMessage;
-	}
+		public static String getOfflineTrackedPlayer()
+		{
+			return offlineTrackedPlayer;
+		}
 
-	public String getTrackedPlayerInWrongWorldMessage()
-	{
-		return trackedPlayerInWrongWorldMessage;
-	}
+		public static String getTrackedPlayerInWrongWorld()
+		{
+			return trackedPlayerInWrongWorld;
+		}
 
-	public String getNullLocationMessage()
-	{
-		return nullLocationMessage;
-	}
+		public static String getNullLocation()
+		{
+			return nullLocation;
+		}
 
-	public String getTrackedPlayerNearMessage()
-	{
-		return trackedPlayerNearMessage;
-	}
+		public static String getTrackedPlayerNear()
+		{
+			return trackedPlayerNear;
+		}
 
-	public String getTrackedPlayerDirectionMessage()
-	{
-		return trackedPlayerDirectionMessage;
-	}
+		public static String getTrackedPlayerDirection()
+		{
+			return trackedPlayerDirection;
+		}
 
-	public String getWolfDrinksBloodMessage()
-	{
-		return wolfDrinksBloodMessage;
-	}
+		public static String getWolfDrinksBlood()
+		{
+			return wolfDrinksBlood;
+		}
 
-	public String getWolfSniffsBloodMessage()
-	{
-		return wolfSniffsBloodMessage;
-	}
+		public static String getWolfSniffsBlood()
+		{
+			return wolfSniffsBlood;
+		}
 
-	public String getEasterEggMessage()
-	{
-		return easterEggMessage;
-	}
+		public static String getEasterEgg()
+		{
+			return easterEgg;
+		}
 
-	public String getCommandBloodObtainedMessage()
-	{
-		return commandBloodObtainedMessage;
+		public static String getCommandBloodObtained()
+		{
+			return commandBloodObtained;
+		}
+
+		private static String nullTrackedPlayer;
+		private static String offlineTrackedPlayer;
+		private static String trackedPlayerInWrongWorld;
+		private static String nullLocation;
+		private static String trackedPlayerNear;
+		private static String trackedPlayerDirection;
+		private static String wolfDrinksBlood;
+		private static String wolfSniffsBlood;
+		private static String easterEgg;
+		private static String commandBloodObtained;
 	}
 
 	public int getTrackingRadius()
@@ -116,21 +130,10 @@ public class Config implements IConfigurationChanged
 		return easterEggPlayers.contains(player.getName());
 	}
 
-	private String nullTrackedPlayerMessage;
-	private String offlineTrackedPlayerMessage;
-	private String trackedPlayerInWrongWorldMessage;
-	private String nullLocationMessage;
-	private String trackedPlayerNearMessage;
-	private String trackedPlayerDirectionMessage;
-	private String wolfDrinksBloodMessage;
-	private String wolfSniffsBloodMessage;
-	private String easterEggMessage;
-	private String commandBloodObtainedMessage;
-
 	private int trackingRadius;
 	private int minimumDroppedBlood;
 	private int maximumDroppedBlood;
 	private float chanceOfBloodBeingUsedUp;
 	private String trackingUniverse;
-	private List<String> easterEggPlayers = new ArrayList<>(0);
+	private final List<String> easterEggPlayers = new ArrayList<>(0);
 }
