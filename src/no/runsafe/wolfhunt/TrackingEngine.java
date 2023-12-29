@@ -13,6 +13,7 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.item.meta.RunsafePotion;
 
 import java.util.List;
 import java.util.Random;
@@ -26,25 +27,25 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		this.server = server;
 	}
 
-	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer)
+	private String trackPlayer(IPlayer tracker, IPlayer trackedPlayer, RunsafeMeta vial)
 	{
 		if (trackedPlayer == null)
-			return config.getNullTrackedPlayerMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getNullTrackedPlayer();
 
 		if (!trackedPlayer.isOnline())
-			return config.getOfflineTrackedPlayerMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getOfflineTrackedPlayer();
 
 		IWorld playerWorld = trackedPlayer.getWorld();
 		IWorld trackerWorld = trackedPlayer.getWorld();
 
 		if (playerWorld == null || trackerWorld == null || !playerWorld.isWorld(trackerWorld))
-			return config.getTrackedPlayerInWrongWorldMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getTrackedPlayerInWrongWorld();
 
 		ILocation playerLocation = trackedPlayer.getLocation();
 		ILocation trackerLocation = tracker.getLocation();
 
 		if (playerLocation == null || trackerLocation == null)
-			return config.getNullLocationMessage();
+			return Config.Message.getWolfSniffsBlood() + "\n" + Config.Message.getNullLocation();
 
 		short east_west = -1;
 		short north_south = -1;
@@ -66,7 +67,7 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			north_south = 1;
 
 		if (east_west == -1 && north_south == -1)
-			return config.getTrackedPlayerNearMessage();
+			return Config.Message.getTrackedPlayerNear();
 
 		String direction = "skyward";
 
@@ -80,7 +81,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		else if (north_south == 2)
 			direction = "south-" + direction;
 
-		return String.format(config.getTrackedPlayerDirectionMessage(), direction);
+		String returnMessage = String.format(Config.Message.getTrackedPlayerDirection(), direction);
+
+		if (!(random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100)))
+			return Config.Message.getWolfSniffsBlood() + "\n" + returnMessage;
+
+		tracker.removeExactItem(vial, 1); // Remove one vial.
+		return Config.Message.getWolfDrinksBlood() + "\n" + returnMessage;
 	}
 
 	@Override
@@ -134,27 +141,20 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 
 			if (config.isEasterEggPlayer(trackedPlayer))
 			{
-				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
+				player.sendColouredMessage(Config.Message.getWolfDrinksBlood());
 				player.removeExactItem(item, 1); // Remove one vial.
 				runEasterEgg(player);
 				return;
 			}
 
-			if (random.nextFloat() < (config.getChanceOfBloodBeingUsedUp() / 100))
-			{
-				player.sendColouredMessage(config.getWolfDrinksBloodMessage());
-				player.removeExactItem(item, 1); // Remove one vial.
-			}
-			else player.sendColouredMessage(config.getWolfSniffsBloodMessage());
-
-			player.sendColouredMessage(trackPlayer(player, trackedPlayer)); // Run the track
+			player.sendColouredMessage(trackPlayer(player, trackedPlayer, item)); // Run the track
 			return;
 		}
 	}
 
 	private void runEasterEgg(IPlayer victum)
 	{
-		victum.sendColouredMessage(config.getEasterEggMessage());
+		victum.sendColouredMessage(Config.Message.getEasterEgg());
 
 		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
 
@@ -188,13 +188,13 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 			return;
 
 		RunsafeMeta vial = Item.Brewing.Potion.getItem();
-		vial.setAmount(amount);
-		vial.setDurability((short) 8261);
+		((RunsafePotion) vial).giveCustomEffect(Buff.Healing.Instant);
 		vial.setDisplayName("§3Vial of Blood");
 		vial.addLore("§0 " + player.getUniqueId());
 		vial.addLore("§CTrack: " + player.getName());
 
-		world.dropItem(location, vial);
+		for (int i = 0; i < amount; i++)
+			world.dropItem(location, vial);
 	}
 
 	private final Config config;
