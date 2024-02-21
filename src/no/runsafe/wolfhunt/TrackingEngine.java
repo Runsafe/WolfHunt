@@ -152,17 +152,20 @@ public class TrackingEngine implements IPlayerInteractEntityEvent, IPlayerDeathE
 		}
 	}
 
-	private void runEasterEgg(IPlayer victum)
+	private void runEasterEgg(IPlayer victim)
 	{
-		victum.sendColouredMessage(Config.Message.getEasterEgg());
+		ILocation location = victim.getLocation();
+		if (location == null)
+			return;
+		victim.sendColouredMessage(Config.Message.getEasterEgg());
 
-		victum.getWorld().spawnCreature(victum.getLocation(), "evocation_fangs");
+		location.getWorld().spawnCreature(location, "evocation_fangs");
 
-		victum.addBuff(Buff.Combat.Blindness.duration(15));
-		victum.addBuff(Buff.Disease.Hunger.duration(15));
-		victum.addBuff(Buff.Utility.Unluck.duration(99999));
-		victum.addBuff(Buff.Utility.Movement.DecreaseSpeed.duration(15));
-		victum.addBuff(Buff.Combat.Damage.Wither.duration(5));
+		victim.addBuff(Buff.Combat.Blindness.duration(15));
+		victim.addBuff(Buff.Disease.Hunger.duration(15));
+		victim.addBuff(Buff.Utility.Unluck.duration(99999));
+		victim.addBuff(Buff.Utility.Movement.DecreaseSpeed.duration(15));
+		victim.addBuff(Buff.Combat.Damage.Wither.duration(5));
 	}
 
 	@Override
