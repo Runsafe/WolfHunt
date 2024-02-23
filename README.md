@@ -20,7 +20,7 @@ Configuration
 
 * preventTrackingOps [Default: true] - If true, server OPs will not be tracked by wolves.
 * allowOpOverride - [Default: false] - If true, being a server OP will override all WolfHunt permissions.
-* trackingItem - [Default: 287] - The item used to track players when right clicked on an owned wolf.
+* trackingItem - [Default: 287] - The item used to track players when right-clicked on an owned wolf.
 * trackingRadius - [Default: 200] - If a player is within this radius the wolf will simply growl to alert the player instead of giving a direction.
 * babyWolvesCanTrack - [Default: false] - If true, baby wolves can be used to track other players.
 
